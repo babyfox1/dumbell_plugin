@@ -1,4 +1,4 @@
-namespace DumbellPlugin.view
+namespace DumbellPlugin.View
 {
     internal static class Program
     {

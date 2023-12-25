@@ -1,50 +1,208 @@
-namespace DumbellPlugin.view
+namespace DumbellPlugin.View
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.Windows.Forms;
+    using DumbellPlugin.Model;
     public partial class MainForm : Form
     {
+
+        /// <summary>
+        /// Экземпляр класса параметров.
+        /// </summary>
+        private readonly Parameters _parameters = new Parameters();
+
+        /// <summary>
+        /// Экземпляр класса строителя.
+        /// </summary>
+        private readonly Builder _builder = new Builder();
+
+        /// <summary>
+        /// Словарь, содержащий элементы управления формы для каждого типа
+        /// параметра.
+        /// </summary>
+        private readonly Dictionary<ParameterType, Dictionary<string, Control>>
+            _parameterFormElements = new Dictionary<ParameterType, Dictionary<string, Control>>();
+
+        /// <summary>
+        /// Цвет по умолчанию для элементов формы.
+        /// </summary>
+        private readonly Color _defaultColor = Color.White;
+
+        /// <summary>
+        /// Цвет для обозначения ошибок ввода.
+        /// </summary>
+        private readonly Color _errorColor =
+            Color.FromArgb(255, 192, 192);
+
+        /// <summary>
+        /// Строка обозначающая textBox.
+        /// </summary>
+        private readonly string _textBox = "textBox";
+
+        /// <summary>
+        /// Строка обозначающая label.
+        /// </summary>
+        private readonly string _label = "label";
+
         public MainForm()
         {
             InitializeComponent();
         }
 
-        private void label6_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Обработчик события загрузки формы.
+        /// </summary>
+        private void FormMain_Load(object sender, EventArgs e)
         {
-
+            InitializeParameterFormElements();
+            SetTextFormElements();
         }
 
-        private void label5_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Инициализирует элементы управления формы для каждого типа
+        /// параметра.
+        /// </summary>
+        private void InitializeParameterFormElements()
         {
+            _parameterFormElements.Add(
+                ParameterType.LengthHandle,
+                new Dictionary<string, Control>
+                {
+                    { _textBox, textBox_LengthHandle },
+                    { _label, label_LengthHandle },
+                });
+            _parameterFormElements.Add(
+                ParameterType.DiameterHandle,
+                new Dictionary<string, Control>
+                {
+                    { _textBox, textBox_DiameterHandle },
+                    { _label, label_DiameterHandle },
+                });
+            _parameterFormElements.Add(
+                ParameterType.WidthFasten,
+                new Dictionary<string, Control>
+                {
+                    { _textBox, textBox_WidthFasten },
+                    { _label, label_WidthFasten },
+                });
+            _parameterFormElements.Add(
+                ParameterType.DiameterFasten,
+                new Dictionary<string, Control>
+                {
+                    { _textBox, textBox_DiameterFasten },
+                    { _label, label_DiameterFasten },
+                });
+            _parameterFormElements.Add(
+                ParameterType.AmountDisk,
+                new Dictionary<string, Control>
+                {
+                    { _textBox, textBox_AmountDisk },
+                    { _label, label_AmountDisk },
+                });
+            _parameterFormElements.Add(
+                ParameterType.OuterDiameterDisk,
+                new Dictionary<string, Control>
+                {
+                    { _textBox, textBox_OuterDiameterDisk },
+                    { _label, label_OuterDiameterDisk },
+                });
+            _parameterFormElements.Add(
+                ParameterType.InnerDiameterDisk,
+                new Dictionary<string, Control>
+                {
+                    { _textBox, textBox_InnerDiameterDisk },
+                    { _label, label_InnerDiameterDisk },
+                });
+            _parameterFormElements.Add(
+                ParameterType.WidthDisk,
+                new Dictionary<string, Control>
+                {
+                    { _textBox, textBox_WidthDisk },
+                    { _label, label10},
+                });
+            SetTextFormElements();
         }
 
-        private void label4_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Обработчик события изменения текста в текстовом поле.
+        /// </summary>
+        private void TextBox_TextChanged(object sender, EventArgs e)
         {
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            int parsedValue;
-
-            if (!int.TryParse(textBox1.Text, out parsedValue) || parsedValue > 400 || parsedValue < 320)
+            if (sender is TextBox textBox)
             {
-                textBox1.BackColor = Color.Pink;
-                label17.Text = "Ошибка! Длина рукоятки.";
-                label17.BackColor = Color.Pink;
-            }
-            else
-            {
-                textBox1.BackColor = SystemColors.Window; // Восстановить стандартный цвет фона
-                label17.Text = ""; // Очистить текст в label17
+                var textBoxName = textBox.Name;
+                var parameterType = ParameterType.Unknown;
+
+                var parameterTypeStr =
+                    textBoxName.Split('_')[1];
+
+                foreach (var item in _parameterFormElements.Keys)
+                {
+                    if (item.ToString() == parameterTypeStr)
+                    {
+                        parameterType = item;
+                        break;
+                    }
+                }
+
+                try
+                {
+                    _parameters.AssertParameter(
+                        parameterType,
+                        _parameters.ParametersDict[parameterType],
+                        Convert.ToDouble(textBox.Text));
+                    SetTextFormElements();
+                    _parameterFormElements[parameterType][_textBox].
+                        BackColor = _defaultColor;
+                    buttonBuild.Enabled = true;
+                }
+                catch (Exception ex)
+                {
+                    var parameter =
+                        _parameters.ParametersDict[parameterType];
+                    var minValue = parameter.MinValue;
+                    var maxValue = parameter.MaxValue;
+                    var message =
+                        ex.Message + "\nВведите число от "
+                                   + $"{minValue} до {maxValue}";
+                    _parameterFormElements[parameterType][_label].
+                        Text = message;
+                    _parameterFormElements[parameterType][_textBox].
+                        BackColor = _errorColor;
+                    buttonBuild.Enabled = false;
+                }
             }
         }
 
-        private void label17_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Устанавливает текст и значения элементов управления формы на
+        /// основе текущих параметров.
+        /// </summary>
+        private void SetTextFormElements()
         {
+            foreach (var item
+                in _parameters.ParametersDict)
+            {
+                var _key = item.Key;
+                var _value = item.Value;
 
+                _parameterFormElements[_key][_textBox].Text =
+                    _value.CurrentValue.ToString();
+                _parameterFormElements[_key][_label].Text =
+                    $"от {_value.MinValue} до {_value.MaxValue}";
+            }
         }
+
+        private void buttonBuild_Click(object sender, EventArgs e)
+        {
+            // Уточните тип параметра, который вам нужен для построения детали
+            ParameterType someParameterType = ParameterType.LengthHandle;
+
+            double parameterValue = _parameters.GetParameter(someParameterType);
+            _builder.BuildDetail(parameterValue);
+        }
+
     }
 }

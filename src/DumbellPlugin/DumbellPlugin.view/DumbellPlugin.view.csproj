@@ -8,4 +8,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DumbellPlugin.Model\DumbellPlugin.Model.csproj" />
+    <ProjectReference Include="..\DumbellPlugin.Wrapper\DumbellPlugin.Wrapper.csproj" />
+  </ItemGroup>
+
 </Project>

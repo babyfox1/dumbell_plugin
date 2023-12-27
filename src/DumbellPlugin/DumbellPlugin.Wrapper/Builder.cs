@@ -45,7 +45,8 @@
             _wrapper.CreateDocument3D();
 
             BuildHandle();
-            BuildDisks();
+            BuildDisksRight();
+            BuildDisksLeft();
             /*BuildFastening();*/
         }
 
@@ -54,56 +55,98 @@
         /// </summary>
         public void BuildHandle()
         {
-            if (_parameters is null)
+            /*if (_parameters is null)
             {
                 return;
-            }
+            }*/
 
-            double LengthHandle = _parameters.GetParameter(ParameterType.LengthHandle);
+            //double LengthHandle = _parameters.GetParameter(ParameterType.LengthHandle);
 
-            // Создаем эскиз
-            var sketch = _wrapper.CreateSketch(Obj3dType.o3d_planeXOZ, LengthHandle);
+            // Создаем эскиз влево
+            var sketchHandleL = _wrapper.CreateSketch(Obj3dType.o3d_planeXOZ, -170);
 
-            var document2d = (ksDocument2D)sketch.BeginEdit();
 
-            // Создаем круг радиусом 100
-            document2d.ksCircle(0, 0, 100, 1);
+            var document2d_L = (ksDocument2D)sketchHandleL.BeginEdit();
+          
+            // Создаем круг радиусом 50(радиус рукоятки)
+            document2d_L.ksCircle(0, 0, 25, 1);
+          
 
-            sketch.EndEdit();
+            sketchHandleL.EndEdit();
+            
 
             // Теперь передаем этот эскиз в метод CreateExtrusion
-            var extrusionDef = _wrapper.CreateExtrusion(sketch, LengthHandle, false);
+            var extrusionDefL = _wrapper.CreateExtrusion(sketchHandleL, 340, false);
 
-            // Выдавливаем круг в отрицательном направлении на 120
-            _wrapper.CreateExtrusion(sketch, -1 * LengthHandle, false);
         }
 
 
         /// <summary>
         /// Строит диски детали.
         /// </summary>
-        private void BuildDisks()
+        private void BuildDisksRight()
         {
             double AmountDisk = _parameters.GetParameter(ParameterType.AmountDisk);
 
-            var sketch = _wrapper.CreateSketch(Obj3dType.o3d_planeXOY, AmountDisk);
 
-            var document2d = (ksDocument2D)sketch.BeginEdit();
 
-            // Внешний круг радиусом 200
-            document2d.ksCircle(150, 0, 200, 1);
+            // Расстояние между дисками
+            int offset = 25;
 
-            // Внутренний круг радиусом 55
-            document2d.ksCircle(150, 0, 55, 1);
+            for (int i = 0; i < AmountDisk; i++)
+            {
+                // Создаем эскиз для первого диска на расстоянии 120 от начала координат
+                var sketch1 = _wrapper.CreateSketch(Obj3dType.o3d_planeXOZ, 150 + i * offset);
+                var document2d_1 = (ksDocument2D)sketch1.BeginEdit();
+                document2d_1.ksCircle(0, 0, 200, 1); // Внешний круг радиусом 200
+                document2d_1.ksCircle(0, 0, 50, 1);  // Внутренний круг радиусом 50
+                sketch1.EndEdit();
 
-            sketch.EndEdit();
+                // Выдавливаем первый диск в положительном направлении на 20
+                _wrapper.CreateExtrusion(sketch1, 20, false);
+            }
 
-            // Выдавливаем соединенные круги в положительном направлении на 20
-            var extrusionDef = _wrapper.CreateExtrusion(sketch, 20, false);
+            /*// Создаем эскиз для второго диска на расстоянии -120 от начала координат
+            var sketch2 = _wrapper.CreateSketch(Obj3dType.o3d_planeXOZ, AmountDisk);
+            var document2d_2 = (ksDocument2D)sketch2.BeginEdit();
+            document2d_2.ksCircle(-120, 0, 200, 1); // Внешний круг радиусом 200
+            document2d_2.ksCircle(-120, 0, 50, 1);  // Внутренний круг радиусом 50
+            sketch2.EndEdit();
 
-            // Выдавливаем в отрицательном направлении на 20
-            _wrapper.CreateExtrusion(sketch, -20, false);
+            // Выдавливаем второй диск в отрицательном направлении на 20
+            _wrapper.CreateExtrusion(sketch2, -20, false);*/
         }
+
+        private void BuildDisksLeft() 
+        {
+            // Расстояние между дисками
+            int offset = 25;
+            double AmountDisk = _parameters.GetParameter(ParameterType.AmountDisk);
+
+            for (int i = 0; i < AmountDisk; i++)
+            {
+                // Создаем эскиз для первого диска на расстоянии 120 от начала координат
+                var sketch2 = _wrapper.CreateSketch(Obj3dType.o3d_planeXOZ, -170 - i * offset);
+                var document2d_2 = (ksDocument2D)sketch2.BeginEdit();
+                document2d_2.ksCircle(0, 0, 200, 1); // Внешний круг радиусом 200
+                document2d_2.ksCircle(0, 0, 50, 1);  // Внутренний круг радиусом 50
+                sketch2.EndEdit();
+
+                // Выдавливаем первый диск в положительном направлении на 20
+                _wrapper.CreateExtrusion(sketch2, 20, false);
+            }
+            /*// Создаем эскиз для второго диска на расстоянии -120 от начала координат
+            var sketch2 = _wrapper.CreateSketch(Obj3dType.o3d_planeXOZ, AmountDisk);
+            var document2d_2 = (ksDocument2D)sketch2.BeginEdit();
+            document2d_2.ksCircle(-120, 0, 200, 1); // Внешний круг радиусом 200
+            document2d_2.ksCircle(-120, 0, 50, 1);  // Внутренний круг радиусом 50
+            sketch2.EndEdit();
+
+            // Выдавливаем второй диск в отрицательном направлении на 20
+            _wrapper.CreateExtrusion(sketch2, -20, false);*/
+
+        }
+
     }
 }
 

@@ -5,6 +5,10 @@ namespace DumbellPlugin.View
     using System.Drawing;
     using System.Windows.Forms;
     using DumbellPlugin.Model;
+
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class MainForm : Form
     {
 
@@ -49,12 +53,13 @@ namespace DumbellPlugin.View
         public MainForm()
         {
             InitializeComponent();
+          
         }
 
         /// <summary>
         /// Обработчик события загрузки формы.
         /// </summary>
-        private void FormMain_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
             InitializeParameterFormElements();
             SetTextFormElements();
@@ -197,11 +202,7 @@ namespace DumbellPlugin.View
 
         private void buttonBuild_Click(object sender, EventArgs e)
         {
-            // Уточните тип параметра, который вам нужен для построения детали
-            ParameterType someParameterType = ParameterType.LengthHandle;
-
-            double parameterValue = _parameters.GetParameter(someParameterType);
-            _builder.BuildDetail(parameterValue);
+            _builder.BuildDetail(_parameters.GetParametersCurrentValues());
         }
 
     }

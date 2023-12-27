@@ -15,6 +15,8 @@
         /// </summary>
         private ksPart? _part;
 
+        public ksPart Part { get { return _part; } }
+
         /// <summary>
         /// Получает объект KOMPAS-3D.
         /// </summary>
@@ -30,30 +32,20 @@
             try
             {
                 Kompas = (KompasObject)Activator.CreateInstance(Type.GetTypeFromProgID("KOMPAS.Application.5"));
-                Console.WriteLine("Уже подключено к активной сессии KOMPAS-3D");
-                return true;
-            }
-            catch (COMException)
-            {
-                try
+
+                if (Kompas != null)
                 {
-                    Kompas = (KompasObject)Activator.CreateInstance(
-                        Type.GetTypeFromProgID("KOMPAS.Application.5"));
                     Kompas.Visible = true;
                     Kompas.ActivateControllerAPI();
-
-                    Console.WriteLine("Успешно подключено к активной сессии KOMPAS-3D");
                     return true;
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Ошибка при подключении к активной сессии KOMPAS-3D: " + ex.Message);
-                    return false;
-                }
+
+                return false;
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Неожиданная ошибка: " + ex.Message);
+                Console.WriteLine(ex.Message);
                 return false;
             }
         }
@@ -64,13 +56,17 @@
         /// <returns>Объект 3D-документа KOMPAS-3D.</returns>
         public ksDocument3D CreateDocument3D()
         {
-            ksDocument3D document3D = Kompas.Document3D();
+            ksDocument3D? document3D = Kompas?.Document3D() as ksDocument3D;
 
-            document3D.Create();
-            _part = document3D.GetPart((int)Part_Type.pTop_Part);
+            if (document3D != null)
+            {
+                document3D.Create();
+                _part = document3D.GetPart((int)Part_Type.pTop_Part);
+            }
 
             return document3D;
         }
+
 
         /// <summary>
         /// Создает смещенную плоскость относительно другой плоскости.
@@ -78,20 +74,21 @@
         /// <param name="plane">Тип базовой плоскости.</param>
         /// <param name="offset">Величина смещения.</param>
         /// <returns>Экземпляр смещенной плоскости.</returns>
-        public ksEntity CreateOffsetPlane(ksEntity offsetWidthEntity, double width, bool v, Obj3dType plane, double offset)
+        public ksEntity CreateOffsetPlane(Obj3dType planeType, double offset)
         {
-            var offsetEntity = (ksEntity)_part.
-                NewEntity((short)Obj3dType.o3d_planeOffset);
-            var offsetDef = (ksPlaneOffsetDefinition)offsetEntity.
-                GetDefinition();
+            var offsetEntity = (ksEntity)_part.NewEntity((short)Obj3dType.o3d_planeOffset);
+            var offsetDef = (ksPlaneOffsetDefinition)offsetEntity.GetDefinition();
 
-            offsetDef.SetPlane((ksEntity)_part.NewEntity((short)plane));
+            ksEntity planeEntity = (ksEntity)_part.NewEntity((short)planeType);
+            offsetDef.SetPlane(planeEntity);
+
             offsetDef.offset = offset;
             offsetDef.direction = false;
             offsetEntity.Create();
 
-            return offsetEntity;
+            return offsetEntity; // Возвращаем созданный объект смещенной плоскости
         }
+
 
         /// <summary>
         /// Создает эскиз на заданной плоскости.
@@ -101,32 +98,33 @@
         /// <param name="offsetPlane">Смещенная плоскость
         /// (может быть null).</param>
         /// <returns>Определение созданного эскиза.</returns>
-        public ksSketchDefinition CreateSketch(
-        Obj3dType planeType,
-        ksEntity offsetPlane)
+        public ksSketchDefinition CreateSketch(Obj3dType planeType, double? offset)
         {
-            var plane = (ksEntity)_part.
-                GetDefaultEntity((short)planeType);
-            var sketch = (ksEntity)_part.
-                NewEntity((short)Obj3dType.o3d_sketch);
-            var ksSketch = (ksSketchDefinition)sketch.GetDefinition();
+            ksEntity planeEntity;
 
-            if (offsetPlane != null)
+            if (offset.HasValue)
             {
-                ksSketch.SetPlane(offsetPlane);
+                // Создаем смещенную плоскость 
+                planeEntity = CreateOffsetPlane(planeType, offset.Value);
             }
             else
             {
-                ksSketch.SetPlane(plane);
+                // Берем дефолтную плоскость   
+                planeEntity = _part.GetDefaultEntity((short)planeType);
             }
+
+            // Далее создаем эскиз
+            var sketch = (ksEntity)_part.NewEntity((short)Obj3dType.o3d_sketch);
+
+            var ksSketch = (ksSketchDefinition)sketch.GetDefinition();
+
+            ksSketch.SetPlane(planeEntity);
 
             sketch.Create();
 
-            // Важно вызвать EndEdit для завершения редактирования эскиза
-           // sketch.EndEdit();
-
             return ksSketch;
         }
+
 
 
         /// <summary>
@@ -185,11 +183,7 @@
             return extrusionDef;
         }
 
-        internal ksSketchDefinition CreateSketch(ksEntity offsetEntity1, ksEntity offsetEntity2)
-        {
-            throw new NotImplementedException();
-        }
-
+  
         internal object CreateMirroredInstance(ksBossExtrusionDefinition extrusionDef, ksEntity offsetWidthEntity)
         {
             throw new NotImplementedException();
@@ -210,9 +204,6 @@
             throw new NotImplementedException();
         }
 
-        internal ksSketchDefinition CreateSketch(Obj3dType o3d_planeXOZ, double lengthHandle)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

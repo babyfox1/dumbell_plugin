@@ -15,6 +15,7 @@
         public Dictionary<ParameterType, Parameter> ParametersDict =
             new Dictionary<ParameterType, Parameter>();
 
+        // TODO: Нужен?
         /*       /// <summary>
                /// Отступ от возможных граничных параметров детали.
                /// </summary>
@@ -53,7 +54,8 @@
         }
 
 
-
+        // TODO: XML
+        // TODO: не используется
         public Dictionary<ParameterType, double> GetParametersCurrentValues()
         {
             var parametersCurrentValues = new Dictionary<ParameterType, double>();
@@ -112,12 +114,15 @@
         /// <param name="parameter">Измененный параметр.</param>
         public void ChangeParametersRangeValues(
         ParameterType parameterType,
+
+        // TODO: не используется
         Parameter parameter)
         {
             switch (parameterType)
             {
                 case ParameterType.LengthHandle:
                     // Длина рукоятки H (Hmin = 320 — Hmax = 400мм)
+                    // TODO: вынести в константы
                     ParametersDict[ParameterType.LengthHandle].MinValue = 500.0; // Hmin = 320
                     ParametersDict[ParameterType.LengthHandle].MaxValue = 650.0; //  Hmax = 400
                     break;
@@ -171,6 +176,7 @@
 
         }
 
+        // TODO: Нужно?
         /*public object GetParameter()
         {
             throw new NotImplementedException();

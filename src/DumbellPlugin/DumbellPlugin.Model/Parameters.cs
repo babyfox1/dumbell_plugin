@@ -15,10 +15,10 @@
         public Dictionary<ParameterType, Parameter> ParametersDict =
             new Dictionary<ParameterType, Parameter>();
 
- /*       /// <summary>
-        /// Отступ от возможных граничных параметров детали.
-        /// </summary>
-        private readonly double _borderOffset = 49;*/
+        /*       /// <summary>
+               /// Отступ от возможных граничных параметров детали.
+               /// </summary>
+               private readonly double _borderOffset = 49;*/
 
         /// <summary>
         /// Инициализирует новый экземпляр класса Parameters со значениями
@@ -28,25 +28,25 @@
         {
             ParametersDict.Add(
                 ParameterType.LengthHandle,
-                new Parameter(340, 500, 300));
+                new Parameter(500, 650, 500));
             ParametersDict.Add(
                 ParameterType.DiameterHandle,
-                new Parameter(25, 50, 20));
+                new Parameter(30, 30, 20));
             ParametersDict.Add(
                 ParameterType.WidthFasten,
                 new Parameter(10, 10, 10));
             ParametersDict.Add(
                 ParameterType.DiameterFasten,
-                new Parameter(60, 90, 50));
+                new Parameter(50, 50, 35));
             ParametersDict.Add(
                 ParameterType.AmountDisk,
                 new Parameter(3, 5, 1));
             ParametersDict.Add(
                 ParameterType.OuterDiameterDisk,
-                new Parameter(250, 400, 150));
+                new Parameter(200, 200, 120));
             ParametersDict.Add(
                 ParameterType.InnerDiameterDisk,
-                new Parameter(50, 90, 40));
+                new Parameter(31, 31, 21));
             ParametersDict.Add(
                 ParameterType.WidthDisk,
                 new Parameter(20, 30, 10));
@@ -118,14 +118,14 @@
             {
                 case ParameterType.LengthHandle:
                     // Длина рукоятки H (Hmin = 320 — Hmax = 400мм)
-                    ParametersDict[ParameterType.LengthHandle].MinValue = 300.0; // Hmin = 320
-                    ParametersDict[ParameterType.LengthHandle].MaxValue = 500.0; //  Hmax = 400
+                    ParametersDict[ParameterType.LengthHandle].MinValue = 500.0; // Hmin = 320
+                    ParametersDict[ParameterType.LengthHandle].MaxValue = 650.0; //  Hmax = 400
                     break;
 
                 case ParameterType.DiameterHandle:
                     // Диаметр рукоятки R (Rmin = 20 — Rmax = 40мм)
                     ParametersDict[ParameterType.DiameterHandle].MinValue = 20.0; // Rmin = 20
-                    ParametersDict[ParameterType.DiameterHandle].MaxValue = 50.0; // Rmax = 40
+                    ParametersDict[ParameterType.DiameterHandle].MaxValue = 30.0; // Rmax = 20
                     break;
 
                 case ParameterType.WidthFasten:
@@ -136,8 +136,8 @@
 
                 case ParameterType.DiameterFasten:
                     // Диаметр крепления k (Rmin*2 — Rmax *2мм)
-                    ParametersDict[ParameterType.DiameterFasten].MinValue = 50.0; // Rmin*2 = 20*2
-                    ParametersDict[ParameterType.DiameterFasten].MaxValue = 90.0; // Rmax*2 = 40*2
+                    ParametersDict[ParameterType.DiameterFasten].MinValue = 35.0; // Rmin*2 = 20*2
+                    ParametersDict[ParameterType.DiameterFasten].MaxValue = 50.0; // Rmax*2 = 40*2
                     break;
 
                 case ParameterType.AmountDisk:
@@ -148,14 +148,14 @@
 
                 case ParameterType.OuterDiameterDisk:
                     // Внешний диаметр дисков w1 (w1min = 100 — w1max = 150мм)
-                    ParametersDict[ParameterType.OuterDiameterDisk].MinValue = 150.0;
-                    ParametersDict[ParameterType.OuterDiameterDisk].MaxValue = 400.0;
+                    ParametersDict[ParameterType.OuterDiameterDisk].MinValue = 120.0;
+                    ParametersDict[ParameterType.OuterDiameterDisk].MaxValue = 200.0;
                     break;
 
                 case ParameterType.InnerDiameterDisk:
                     // Внутренний диаметр дисков w2 (R*m, где m [1.05-1.1])
-                    ParametersDict[ParameterType.InnerDiameterDisk].MinValue = 40.0; // R*1.05, где Rmin = 20
-                    ParametersDict[ParameterType.InnerDiameterDisk].MaxValue = 90.0; // R*1.1, где Rmax = 40
+                    ParametersDict[ParameterType.InnerDiameterDisk].MinValue = 21.0; // R*1.05, где Rmin = 20
+                    ParametersDict[ParameterType.InnerDiameterDisk].MaxValue = 31.0; // R*1.1, где Rmax = 40
                     break;
 
                 case ParameterType.WidthDisk:

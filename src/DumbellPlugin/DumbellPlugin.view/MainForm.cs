@@ -53,7 +53,7 @@ namespace DumbellPlugin.View
         public MainForm()
         {
             InitializeComponent();
-          
+
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace DumbellPlugin.View
 
         private void buttonBuild_Click(object sender, EventArgs e)
         {
-            _builder.BuildDetail(_parameters.GetParametersCurrentValues());
+            _builder.BuildDetail(_parameters);
         }
 
     }

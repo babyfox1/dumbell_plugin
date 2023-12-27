@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             label_LengthHandle = new Label();
             textBox_LengthHandle = new TextBox();
             label2 = new Label();
@@ -58,7 +59,7 @@
             // label_LengthHandle
             // 
             label_LengthHandle.AutoSize = true;
-            label_LengthHandle.Location = new Point(117, 83);
+            label_LengthHandle.Location = new Point(414, 88);
             label_LengthHandle.Name = "label_LengthHandle";
             label_LengthHandle.Size = new Size(98, 15);
             label_LengthHandle.TabIndex = 0;
@@ -71,25 +72,25 @@
             textBox_LengthHandle.Size = new Size(100, 23);
             textBox_LengthHandle.TabIndex = 1;
             textBox_LengthHandle.Text = "340";
-            textBox_LengthHandle.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
+            textBox_LengthHandle.TextChanged += TextBox_TextChanged;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(405, 83);
+            label2.Location = new Point(115, 88);
             label2.Name = "label2";
-            label2.Size = new Size(95, 15);
+            label2.Size = new Size(98, 15);
             label2.TabIndex = 2;
-            label2.Text = "от 300 до 500мм";
+            label2.Text = "Длина рукоятки:";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(405, 113);
+            label3.Location = new Point(115, 118);
             label3.Name = "label3";
-            label3.Size = new Size(83, 15);
+            label3.Size = new Size(111, 15);
             label3.TabIndex = 5;
-            label3.Text = "от 20 до 50мм";
+            label3.Text = "Диаметр рукоятки:";
             // 
             // textBox_DiameterHandle
             // 
@@ -98,12 +99,12 @@
             textBox_DiameterHandle.Size = new Size(100, 23);
             textBox_DiameterHandle.TabIndex = 4;
             textBox_DiameterHandle.Text = "25";
-            textBox_DiameterHandle.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
+            textBox_DiameterHandle.TextChanged += TextBox_TextChanged;
             // 
             // label_DiameterHandle
             // 
             label_DiameterHandle.AutoSize = true;
-            label_DiameterHandle.Location = new Point(117, 113);
+            label_DiameterHandle.Location = new Point(414, 118);
             label_DiameterHandle.Name = "label_DiameterHandle";
             label_DiameterHandle.Size = new Size(111, 15);
             label_DiameterHandle.TabIndex = 3;
@@ -112,11 +113,11 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(405, 172);
+            label5.Location = new Point(115, 177);
             label5.Name = "label5";
-            label5.Size = new Size(83, 15);
+            label5.Size = new Size(120, 15);
             label5.TabIndex = 11;
-            label5.Text = "от 50 до 90мм";
+            label5.Text = "Диаметр крепления:";
             // 
             // textBox_DiameterFasten
             // 
@@ -125,12 +126,12 @@
             textBox_DiameterFasten.Size = new Size(100, 23);
             textBox_DiameterFasten.TabIndex = 10;
             textBox_DiameterFasten.Text = "60";
-            textBox_DiameterFasten.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
+            textBox_DiameterFasten.TextChanged += TextBox_TextChanged;
             // 
             // label_DiameterFasten
             // 
             label_DiameterFasten.AutoSize = true;
-            label_DiameterFasten.Location = new Point(117, 172);
+            label_DiameterFasten.Location = new Point(414, 177);
             label_DiameterFasten.Name = "label_DiameterFasten";
             label_DiameterFasten.Size = new Size(120, 15);
             label_DiameterFasten.TabIndex = 9;
@@ -139,11 +140,11 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(405, 142);
+            label7.Location = new Point(115, 147);
             label7.Name = "label7";
-            label7.Size = new Size(37, 15);
+            label7.Size = new Size(117, 15);
             label7.TabIndex = 8;
-            label7.Text = "10мм";
+            label7.Text = "Ширина крепления:";
             // 
             // textBox_WidthFasten
             // 
@@ -152,12 +153,12 @@
             textBox_WidthFasten.Size = new Size(100, 23);
             textBox_WidthFasten.TabIndex = 7;
             textBox_WidthFasten.Text = "100";
-            textBox_WidthFasten.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
+            textBox_WidthFasten.TextChanged += TextBox_TextChanged;
             // 
             // label_WidthFasten
             // 
             label_WidthFasten.AutoSize = true;
-            label_WidthFasten.Location = new Point(117, 142);
+            label_WidthFasten.Location = new Point(414, 147);
             label_WidthFasten.Name = "label_WidthFasten";
             label_WidthFasten.Size = new Size(117, 15);
             label_WidthFasten.TabIndex = 6;
@@ -166,11 +167,11 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(405, 290);
+            label9.Location = new Point(115, 295);
             label9.Name = "label9";
-            label9.Size = new Size(83, 15);
+            label9.Size = new Size(89, 15);
             label9.TabIndex = 23;
-            label9.Text = "от 10 до 30мм";
+            label9.Text = "Ширина диска:";
             // 
             // textBox_WidthDisk
             // 
@@ -179,12 +180,12 @@
             textBox_WidthDisk.Size = new Size(100, 23);
             textBox_WidthDisk.TabIndex = 22;
             textBox_WidthDisk.Text = "20";
-            textBox_WidthDisk.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
+            textBox_WidthDisk.TextChanged += TextBox_TextChanged;
             // 
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(117, 290);
+            label10.Location = new Point(414, 295);
             label10.Name = "label10";
             label10.Size = new Size(92, 15);
             label10.TabIndex = 21;
@@ -193,11 +194,11 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(405, 260);
+            label11.Location = new Point(115, 265);
             label11.Name = "label11";
-            label11.Size = new Size(83, 15);
+            label11.Size = new Size(166, 15);
             label11.TabIndex = 20;
-            label11.Text = "от 40 до 90мм";
+            label11.Text = "Внутренний диаметр дисков:";
             // 
             // textBox_InnerDiameterDisk
             // 
@@ -206,12 +207,12 @@
             textBox_InnerDiameterDisk.Size = new Size(100, 23);
             textBox_InnerDiameterDisk.TabIndex = 19;
             textBox_InnerDiameterDisk.Text = "50";
-            textBox_InnerDiameterDisk.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
+            textBox_InnerDiameterDisk.TextChanged += TextBox_TextChanged;
             // 
             // label_InnerDiameterDisk
             // 
             label_InnerDiameterDisk.AutoSize = true;
-            label_InnerDiameterDisk.Location = new Point(117, 260);
+            label_InnerDiameterDisk.Location = new Point(414, 265);
             label_InnerDiameterDisk.Name = "label_InnerDiameterDisk";
             label_InnerDiameterDisk.Size = new Size(166, 15);
             label_InnerDiameterDisk.TabIndex = 18;
@@ -220,11 +221,11 @@
             // label13
             // 
             label13.AutoSize = true;
-            label13.Location = new Point(405, 231);
+            label13.Location = new Point(115, 236);
             label13.Name = "label13";
-            label13.Size = new Size(95, 15);
+            label13.Size = new Size(152, 15);
             label13.TabIndex = 17;
-            label13.Text = "от 100 до 400мм";
+            label13.Text = "Внешний диаметр дисков:";
             // 
             // textBox_OuterDiameterDisk
             // 
@@ -233,12 +234,12 @@
             textBox_OuterDiameterDisk.Size = new Size(100, 23);
             textBox_OuterDiameterDisk.TabIndex = 16;
             textBox_OuterDiameterDisk.Text = "250";
-            textBox_OuterDiameterDisk.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
+            textBox_OuterDiameterDisk.TextChanged += TextBox_TextChanged;
             // 
             // label_OuterDiameterDisk
             // 
             label_OuterDiameterDisk.AutoSize = true;
-            label_OuterDiameterDisk.Location = new Point(117, 231);
+            label_OuterDiameterDisk.Location = new Point(414, 236);
             label_OuterDiameterDisk.Name = "label_OuterDiameterDisk";
             label_OuterDiameterDisk.Size = new Size(152, 15);
             label_OuterDiameterDisk.TabIndex = 15;
@@ -247,11 +248,11 @@
             // label15
             // 
             label15.AutoSize = true;
-            label15.Location = new Point(405, 201);
+            label15.Location = new Point(115, 206);
             label15.Name = "label15";
-            label15.Size = new Size(53, 15);
+            label15.Size = new Size(116, 15);
             label15.TabIndex = 14;
-            label15.Text = "от 1 до 5";
+            label15.Text = "Количество дисков:";
             // 
             // textBox_AmountDisk
             // 
@@ -260,21 +261,20 @@
             textBox_AmountDisk.Size = new Size(100, 23);
             textBox_AmountDisk.TabIndex = 13;
             textBox_AmountDisk.Text = "3";
-            ttextBox_AmountDisk.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
+            textBox_AmountDisk.TextChanged += TextBox_TextChanged;
             // 
             // label_AmountDisk
             // 
             label_AmountDisk.AutoSize = true;
-            label_AmountDisk.Location = new Point(117, 201);
+            label_AmountDisk.Location = new Point(414, 206);
             label_AmountDisk.Name = "label_AmountDisk";
             label_AmountDisk.Size = new Size(116, 15);
             label_AmountDisk.TabIndex = 12;
             label_AmountDisk.Text = "Количество дисков:";
-
             // 
             // buttonBuild
             // 
-            buttonBuild.Location = new Point(402, 319);
+            buttonBuild.Location = new Point(295, 316);
             buttonBuild.Name = "buttonBuild";
             buttonBuild.Size = new Size(95, 23);
             buttonBuild.TabIndex = 24;
@@ -286,7 +286,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(620, 450);
+            ClientSize = new Size(699, 450);
             Controls.Add(buttonBuild);
             Controls.Add(label9);
             Controls.Add(textBox_WidthDisk);
@@ -312,9 +312,11 @@
             Controls.Add(label2);
             Controls.Add(textBox_LengthHandle);
             Controls.Add(label_LengthHandle);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MainForm";
             Text = "DumbellPlugin";
-            this.Load += new System.EventHandler(this.MainForm_Load);
+            Load += MainForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }

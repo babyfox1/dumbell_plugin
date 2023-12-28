@@ -1,3 +1,7 @@
+// <copyright file="MainForm.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 namespace DumbellPlugin.View
 {
     using System;
@@ -7,53 +11,54 @@ namespace DumbellPlugin.View
     using DumbellPlugin.Model;
 
     /// <summary>
-    /// 
+    /// ћайн.
     /// </summary>
     public partial class MainForm : Form
     {
-
         /// <summary>
         /// Ёкземпл€р класса параметров.
         /// </summary>
-        private readonly Parameters _parameters = new Parameters();
+        private readonly Parameters parameters = new Parameters();
 
         /// <summary>
         /// Ёкземпл€р класса строител€.
         /// </summary>
-        private readonly Builder _builder = new Builder();
+        private readonly Builder builder = new Builder();
 
         /// <summary>
         /// —ловарь, содержащий элементы управлени€ формы дл€ каждого типа
         /// параметра.
         /// </summary>
         private readonly Dictionary<ParameterType, Dictionary<string, Control>>
-            _parameterFormElements = new Dictionary<ParameterType, Dictionary<string, Control>>();
+            parameterFormElements = new Dictionary<ParameterType, Dictionary<string, Control>>();
 
         /// <summary>
         /// ÷вет по умолчанию дл€ элементов формы.
         /// </summary>
-        private readonly Color _defaultColor = Color.White;
+        private readonly Color defaultColor = Color.White;
 
         /// <summary>
         /// ÷вет дл€ обозначени€ ошибок ввода.
         /// </summary>
-        private readonly Color _errorColor =
+        private readonly Color errorColor =
             Color.FromArgb(255, 192, 192);
 
         /// <summary>
         /// —трока обозначающа€ textBox.
         /// </summary>
-        private readonly string _textBox = "textBox";
+        private readonly string textBox = "textBox";
 
         /// <summary>
         /// —трока обозначающа€ label.
         /// </summary>
-        private readonly string _label = "label";
+        private readonly string label = "label";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainForm"/> class.
+        /// </summary>
         public MainForm()
         {
-            InitializeComponent();
-
+            this.InitializeComponent();
         }
 
         /// <summary>
@@ -61,8 +66,8 @@ namespace DumbellPlugin.View
         /// </summary>
         private void MainForm_Load(object sender, EventArgs e)
         {
-            InitializeParameterFormElements();
-            SetTextFormElements();
+            this.InitializeParameterFormElements();
+            this.SetTextFormElements();
         }
 
         /// <summary>
@@ -71,63 +76,63 @@ namespace DumbellPlugin.View
         /// </summary>
         private void InitializeParameterFormElements()
         {
-            _parameterFormElements.Add(
+            this.parameterFormElements.Add(
                 ParameterType.LengthHandle,
                 new Dictionary<string, Control>
                 {
-                    { _textBox, textBox_LengthHandle },
-                    { _label, label_LengthHandle },
+                    { this.textBox, this.LengthHandleTextBox },
+                    { this.label, this.LengthHandleLabel },
                 });
-            _parameterFormElements.Add(
+            this.parameterFormElements.Add(
                 ParameterType.DiameterHandle,
                 new Dictionary<string, Control>
                 {
-                    { _textBox, textBox_DiameterHandle },
-                    { _label, label_DiameterHandle },
+                    { this.textBox, this.DiameterHandleTextBox },
+                    { this.label, this.DiameterHandleLabel },
                 });
-            _parameterFormElements.Add(
+            this.parameterFormElements.Add(
                 ParameterType.WidthFasten,
                 new Dictionary<string, Control>
                 {
-                    { _textBox, textBox_WidthFasten },
-                    { _label, label_WidthFasten },
+                    { this.textBox, this.WidthFastenTextBox },
+                    { this.label, this.WidthFastenLabel },
                 });
-            _parameterFormElements.Add(
+            this.parameterFormElements.Add(
                 ParameterType.DiameterFasten,
                 new Dictionary<string, Control>
                 {
-                    { _textBox, textBox_DiameterFasten },
-                    { _label, label_DiameterFasten },
+                    { this.textBox, this.DiameterFastenTextBox },
+                    { this.label, this.DiameterFastenLabel },
                 });
-            _parameterFormElements.Add(
+            this.parameterFormElements.Add(
                 ParameterType.AmountDisk,
                 new Dictionary<string, Control>
                 {
-                    { _textBox, textBox_AmountDisk },
-                    { _label, label_AmountDisk },
+                    { this.textBox, this.AmountDiskTextBox },
+                    { this.label, this.AmountDiskLabel },
                 });
-            _parameterFormElements.Add(
+            this.parameterFormElements.Add(
                 ParameterType.OuterDiameterDisk,
                 new Dictionary<string, Control>
                 {
-                    { _textBox, textBox_OuterDiameterDisk },
-                    { _label, label_OuterDiameterDisk },
+                    { this.textBox, this.OuterDiameterDiskTextBox },
+                    { this.label, this.OuterDiameterDiskLabel },
                 });
-            _parameterFormElements.Add(
+            this.parameterFormElements.Add(
                 ParameterType.InnerDiameterDisk,
                 new Dictionary<string, Control>
                 {
-                    { _textBox, textBox_InnerDiameterDisk },
-                    { _label, label_InnerDiameterDisk },
+                    { this.textBox, this.InnerDiameterDiskTextBox },
+                    { this.label, this.InnerDiameterDiskLabel },
                 });
-            _parameterFormElements.Add(
+            this.parameterFormElements.Add(
                 ParameterType.WidthDisk,
                 new Dictionary<string, Control>
                 {
-                    { _textBox, textBox_WidthDisk },
-                    { _label, label10},
+                    { this.textBox, this.WidthDiskTextBox },
+                    { this.label, this.WidthDiskLabel },
                 });
-            SetTextFormElements();
+            this.SetTextFormElements();
         }
 
         /// <summary>
@@ -143,7 +148,7 @@ namespace DumbellPlugin.View
                 var parameterTypeStr =
                     textBoxName.Split('_')[1];
 
-                foreach (var item in _parameterFormElements.Keys)
+                foreach (var item in this.parameterFormElements.Keys)
                 {
                     if (item.ToString() == parameterTypeStr)
                     {
@@ -154,29 +159,29 @@ namespace DumbellPlugin.View
 
                 try
                 {
-                    _parameters.AssertParameter(
+                    this.parameters.AssertParameter(
                         parameterType,
-                        _parameters.ParametersDict[parameterType],
+                        this.parameters.ParametersDict[parameterType],
                         Convert.ToDouble(textBox.Text));
-                    SetTextFormElements();
-                    _parameterFormElements[parameterType][_textBox].
-                        BackColor = _defaultColor;
-                    buttonBuild.Enabled = true;
+                    this.SetTextFormElements();
+                    this.parameterFormElements[parameterType][this.textBox].
+                        BackColor = this.defaultColor;
+                    this.BuildButton.Enabled = true;
                 }
                 catch (Exception ex)
                 {
                     var parameter =
-                        _parameters.ParametersDict[parameterType];
+                        this.parameters.ParametersDict[parameterType];
                     var minValue = parameter.MinValue;
                     var maxValue = parameter.MaxValue;
                     var message =
                         ex.Message + "\n¬ведите число от "
                                    + $"{minValue} до {maxValue}";
-                    _parameterFormElements[parameterType][_label].
+                    this.parameterFormElements[parameterType][this.label].
                         Text = message;
-                    _parameterFormElements[parameterType][_textBox].
-                        BackColor = _errorColor;
-                    buttonBuild.Enabled = false;
+                    this.parameterFormElements[parameterType][this.textBox].
+                        BackColor = this.errorColor;
+                    this.BuildButton.Enabled = false;
                 }
             }
         }
@@ -188,22 +193,26 @@ namespace DumbellPlugin.View
         private void SetTextFormElements()
         {
             foreach (var item
-                in _parameters.ParametersDict)
+                in this.parameters.ParametersDict)
             {
-                var _key = item.Key;
-                var _value = item.Value;
+                var key = item.Key;
+                var value = item.Value;
 
-                _parameterFormElements[_key][_textBox].Text =
-                    _value.CurrentValue.ToString();
-                _parameterFormElements[_key][_label].Text =
-                    $"от {_value.MinValue} до {_value.MaxValue}";
+                this.parameterFormElements[key][this.textBox].Text =
+                    value.CurrentValue.ToString();
+                this.parameterFormElements[key][this.label].Text =
+                    $"от {value.MinValue} до {value.MaxValue}";
             }
         }
 
-        private void buttonBuild_Click(object sender, EventArgs e)
+        /// <summary>
+        ///  нопка построить.
+        /// </summary>
+        /// <param name="sender">параметр.</param>
+        /// <param name="e">параметр2.</param>
+        private void ButtonBuild_Click(object sender, EventArgs e)
         {
-            _builder.BuildDetail(_parameters);
+            this.builder.BuildDetail(this.parameters);
         }
-
     }
 }

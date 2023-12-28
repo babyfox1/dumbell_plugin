@@ -1,8 +1,13 @@
-﻿namespace DumbellPlugin.Model
+﻿// <copyright file="Parameter.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace DumbellPlugin.Model
 {
     // TODO: нет тестов
     // TODO: поставить стайлкоп
     // TODO: для try catch ловить конкретные исключения, например, ArgumentException
+
     /// <summary>
     /// Представляет параметр с текущим значением, максимальным и минимальным
     /// значениями.
@@ -10,17 +15,7 @@
     public class Parameter
     {
         /// <summary>
-        /// Инициализирует новый экземпляр класса Parameter с дефолтными
-        /// значениями.
-        /// </summary>
-        public Parameter()
-        {
-            CurrentValue = 5;
-            MaxValue = 10;
-            MinValue = 1;
-        }
-
-        /// <summary>
+        /// Initializes a new instance of the <see cref="Parameter"/> class.
         /// Инициализирует новый экземпляр класса Parameter с указанными
         /// значениями.
         /// </summary>
@@ -36,23 +31,23 @@
             Validator.ValidateMinMax(minValue, maxValue);
             Validator.ValidateRange(currentValue, minValue, maxValue);
 
-            CurrentValue = currentValue;
-            MaxValue = maxValue;
-            MinValue = minValue;
+            this.CurrentValue = currentValue;
+            this.MaxValue = maxValue;
+            this.MinValue = minValue;
         }
 
         /// <summary>
-        /// Получает или задает текущее значение параметра.
+        /// Gets or sets получает или задает текущее значение параметра.
         /// </summary>
         public double CurrentValue { get; set; }
 
         /// <summary>
-        /// Получает или задает максимальное значение параметра.
+        /// Gets or sets получает или задает максимальное значение параметра.
         /// </summary>
         public double MaxValue { get; set; }
 
         /// <summary>
-        /// Получает или задает минимальное значение параметра.
+        /// Gets or sets получает или задает минимальное значение параметра.
         /// </summary>
         public double MinValue { get; set; }
     }

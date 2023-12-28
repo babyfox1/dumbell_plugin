@@ -1,7 +1,10 @@
-﻿namespace DumbellPlugin.Model
+﻿// <copyright file="Wrapper.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace DumbellPlugin.Model
 {
     using System;
-    using System.Runtime.InteropServices;
     using Kompas6API5;
     using Kompas6Constants3D;
 
@@ -13,12 +16,10 @@
         /// <summary>
         /// Компонент исполнения.
         /// </summary>
-        private ksPart? _part;
-
-        public ksPart Part { get { return _part; } }
+        private ksPart? part;
 
         /// <summary>
-        /// Получает объект KOMPAS-3D.
+        /// Gets получает объект KOMPAS-3D.
         /// </summary>
         public KompasObject? Kompas { get; private set; }
 
@@ -31,17 +32,16 @@
         {
             try
             {
-                Kompas = (KompasObject)Activator.CreateInstance(Type.GetTypeFromProgID("KOMPAS.Application.5"));
+                this.Kompas = Activator.CreateInstance(Type.GetTypeFromProgID("KOMPAS.Application.5")) as KompasObject;
 
-                if (Kompas != null)
+                if (this.Kompas != null)
                 {
-                    Kompas.Visible = true;
-                    Kompas.ActivateControllerAPI();
+                    this.Kompas.Visible = true;
+                    this.Kompas.ActivateControllerAPI();
                     return true;
                 }
 
                 return false;
-
             }
             catch (Exception ex)
             {
@@ -56,30 +56,29 @@
         /// <returns>Объект 3D-документа KOMPAS-3D.</returns>
         public ksDocument3D CreateDocument3D()
         {
-            ksDocument3D? document3D = Kompas?.Document3D() as ksDocument3D;
+            ksDocument3D? document3D = this.Kompas?.Document3D() as ksDocument3D;
 
             if (document3D != null)
             {
                 document3D.Create();
-                _part = document3D.GetPart((int)Part_Type.pTop_Part);
+                this.part = (ksPart?)document3D.GetPart((int)Part_Type.pTop_Part);
             }
 
             return document3D;
         }
 
-
         /// <summary>
-        /// Создает смещенную плоскость относительно другой плоскости.
+        /// Создайтется плоскость.
         /// </summary>
-        /// <param name="plane">Тип базовой плоскости.</param>
-        /// <param name="offset">Величина смещения.</param>
-        /// <returns>Экземпляр смещенной плоскости.</returns>
+        /// <param name="planeType">Параметр1.</param>
+        /// <param name="offset">Параметр2.</param>
+        /// <returns>offsetEntity.</returns>
         public ksEntity CreateOffsetPlane(Obj3dType planeType, double offset)
         {
-            var offsetEntity = (ksEntity)_part.NewEntity((short)Obj3dType.o3d_planeOffset);
+            var offsetEntity = (ksEntity)part.NewEntity((short)Obj3dType.o3d_planeOffset);
             var offsetDef = (ksPlaneOffsetDefinition)offsetEntity.GetDefinition();
 
-            ksEntity planeEntity = (ksEntity)_part.NewEntity((short)planeType);
+            ksEntity planeEntity = (ksEntity)this.part.NewEntity((short)planeType);
             offsetDef.SetPlane(planeEntity);
 
             offsetDef.offset = offset;
@@ -89,32 +88,29 @@
             return offsetEntity; // Возвращаем созданный объект смещенной плоскости
         }
 
-
         /// <summary>
-        /// Создает эскиз на заданной плоскости.
+        /// Создает эскиз.
         /// </summary>
-        /// <param name="planeType">Тип плоскости, на которой создается
-        /// эскиз.</param>
-        /// <param name="offsetPlane">Смещенная плоскость
-        /// (может быть null).</param>
-        /// <returns>Определение созданного эскиза.</returns>
+        /// <param name="planeType">Параметр1.</param>
+        /// <param name="offset">Параметр2.</param>
+        /// <returns>ksketch.</returns>
         public ksSketchDefinition CreateSketch(Obj3dType planeType, double? offset)
         {
             ksEntity planeEntity;
 
             if (offset.HasValue)
             {
-                // Создаем смещенную плоскость 
-                planeEntity = CreateOffsetPlane(planeType, offset.Value);
+                // Создаем смещенную плоскость
+                planeEntity = this.CreateOffsetPlane(planeType, offset.Value);
             }
             else
             {
-                // Берем дефолтную плоскость   
-                planeEntity = _part.GetDefaultEntity((short)planeType);
+                // Берем дефолтную плоскость
+                planeEntity = (ksEntity)part.GetDefaultEntity((short)planeType);
             }
 
             // Далее создаем эскиз
-            var sketch = (ksEntity)_part.NewEntity((short)Obj3dType.o3d_sketch);
+            var sketch = (ksEntity)part.NewEntity((short)Obj3dType.o3d_sketch);
 
             var ksSketch = (ksSketchDefinition)sketch.GetDefinition();
 
@@ -124,8 +120,6 @@
 
             return ksSketch;
         }
-
-
 
         /// <summary>
         /// Создает выдавливание на основе эскиза.
@@ -139,7 +133,7 @@
         public ksBossExtrusionDefinition CreateExtrusion(
             ksSketchDefinition sketch, double depth, bool side = true)
         {
-            var extrusionEntity = (ksEntity)_part.
+            var extrusionEntity = (ksEntity)part.
                 NewEntity((short)ksObj3dTypeEnum.o3d_bossExtrusion);
             var extrusionDef = (ksBossExtrusionDefinition)extrusionEntity.
                 GetDefinition();
@@ -153,57 +147,5 @@
 
             return extrusionDef;
         }
-
-        /// <summary>
-        /// Создает выдавливание до ближайшей поверхности на основе эскиза.
-        /// </summary>
-        /// <param name="sketch">Эскиз, на основе которого создается
-        /// выдавливание.</param>
-        /// <param name="side">Направление выдавливания
-        /// (true - в одну сторону, false - в обратную).</param>
-        /// <returns>Определение созданного выдавливания.</returns>
-        public ksBossExtrusionDefinition CreateExtrusionToNearSurface(
-            ksSketchDefinition sketch,
-            bool side = true)
-        {
-            var extrusionEntity = (ksEntity)_part.
-                NewEntity((short)ksObj3dTypeEnum.o3d_bossExtrusion);
-            var extrusionDef = (ksBossExtrusionDefinition)extrusionEntity.
-                GetDefinition();
-
-            extrusionDef.SetSideParam(
-                side,
-                (short)End_Type.etUpToNearSurface);
-            extrusionDef.directionType =
-                side ? (short)Direction_Type.dtNormal :
-                    (short)Direction_Type.dtReverse;
-            extrusionDef.SetSketch(sketch);
-            extrusionEntity.Create();
-
-            return extrusionDef;
-        }
-
-  
-        internal object CreateMirroredInstance(ksBossExtrusionDefinition extrusionDef, ksEntity offsetWidthEntity)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal ksEntity CreateOffsetPlane(ksEntity offsetWidthEntity, double width, bool v1, bool v2, bool v3)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal ksEntity CreateOffsetPlane(Obj3dType o3d_planeXOY, int v)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal ksEntity CreateOffsetPlane(Obj3dType o3d_planeXOZ)
-        {
-            throw new NotImplementedException();
-        }
-
-        
     }
 }

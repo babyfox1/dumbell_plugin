@@ -1,4 +1,8 @@
-﻿namespace DumbellPlugin.Model
+﻿// <copyright file="Validator.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace DumbellPlugin.Model
 {
     using System;
 

@@ -1,4 +1,8 @@
-﻿namespace DumbellPlugin.Model
+﻿// <copyright file="ParameterType.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace DumbellPlugin.Model
 {
     /// <summary>
     /// Типы параметров, используемые в расчетах.

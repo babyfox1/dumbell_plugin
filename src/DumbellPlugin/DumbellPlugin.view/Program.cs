@@ -1,10 +1,14 @@
+// <copyright file="Program.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 namespace DumbellPlugin.View
 {
     using System;
     using System.Windows.Forms;
 
     /// <summary>
-    /// 
+    /// Программа.
     /// </summary>
     internal static class Program
     {

@@ -90,7 +90,7 @@ namespace DumbellPlugin.Model
         /// <param name="max">Максимальное значение диапазона.</param>
         /// <returns>True, если число находится в допустимом диапазоне. В
         /// противном случае - false.</returns>
-        private static bool IsNumberInRange(
+        public static bool IsNumberInRange(
             double value,
             double min,
             double max)

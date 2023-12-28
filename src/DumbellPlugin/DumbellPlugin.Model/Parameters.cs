@@ -33,7 +33,7 @@ namespace DumbellPlugin.Model
                 new Parameter(30, 30, 20));
             this.ParametersDict.Add(
                 ParameterType.WidthFasten,
-                new Parameter(10, 10, 10));
+                new Parameter(10, 15, 10));
             this.ParametersDict.Add(
                 ParameterType.DiameterFasten,
                 new Parameter(50, 50, 35));

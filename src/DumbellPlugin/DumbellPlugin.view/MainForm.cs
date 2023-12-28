@@ -164,23 +164,41 @@ namespace DumbellPlugin.View
                         this.parameters.ParametersDict[parameterType],
                         Convert.ToDouble(textBox.Text));
                     this.SetTextFormElements();
-                    this.parameterFormElements[parameterType][this.textBox].
-                        BackColor = this.defaultColor;
+                    this.parameterFormElements[parameterType][this.textBox].BackColor = this.defaultColor;
                     this.BuildButton.Enabled = true;
                 }
-                catch (Exception ex)
+                catch (ArgumentException ex)
                 {
-                    var parameter =
-                        this.parameters.ParametersDict[parameterType];
+                    var parameter = this.parameters.ParametersDict[parameterType];
                     var minValue = parameter.MinValue;
                     var maxValue = parameter.MaxValue;
-                    var message =
-                        ex.Message + "\nВведите число от "
-                                   + $"{minValue} до {maxValue}";
-                    this.parameterFormElements[parameterType][this.label].
-                        Text = message;
-                    this.parameterFormElements[parameterType][this.textBox].
-                        BackColor = this.errorColor;
+                    var message = $"{ex.Message}\nВведите число от {minValue} до {maxValue}";
+                    this.parameterFormElements[parameterType][this.label].Text = message;
+                    this.parameterFormElements[parameterType][this.textBox].BackColor = this.errorColor;
+                    this.BuildButton.Enabled = false;
+                }
+                catch (FormatException)
+                {
+                    // Обработка ошибки, если введенное значение не может быть преобразовано в double
+                    // Например:
+                    this.parameterFormElements[parameterType][this.label].Text = "Некорректный формат числа";
+                    this.parameterFormElements[parameterType][this.textBox].BackColor = this.errorColor;
+                    this.BuildButton.Enabled = false;
+                }
+                catch (OverflowException)
+                {
+                    // Обработка ошибки, если введенное значение выходит за пределы допустимого диапазона double
+                    // Например:
+                    this.parameterFormElements[parameterType][this.label].Text = "Значение вне допустимого диапазона";
+                    this.parameterFormElements[parameterType][this.textBox].BackColor = this.errorColor;
+                    this.BuildButton.Enabled = false;
+                }
+                catch (Exception)
+                {
+                    // Обработка остальных исключений, не учтенных выше
+                    // Например:
+                    this.parameterFormElements[parameterType][this.label].Text = "Ошибка ввода";
+                    this.parameterFormElements[parameterType][this.textBox].BackColor = this.errorColor;
                     this.BuildButton.Enabled = false;
                 }
             }
@@ -210,7 +228,7 @@ namespace DumbellPlugin.View
         /// </summary>
         /// <param name="sender">параметр.</param>
         /// <param name="e">параметр2.</param>
-        private void ButtonBuild_Click(object sender, EventArgs e)
+        private void BuildButton_Click(object sender, EventArgs e)
         {
             this.builder.BuildDetail(this.parameters);
         }

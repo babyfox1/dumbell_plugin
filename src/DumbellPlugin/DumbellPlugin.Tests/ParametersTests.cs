@@ -2,6 +2,9 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+// <copyright file="ParametersTests.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 namespace DumbellPlugin.Tests
 {
     using DumbellPlugin.Model;
@@ -14,7 +17,7 @@ namespace DumbellPlugin.Tests
     public class ParametersTests
     {
         /// <summary>
-        /// Проверяет, что при создании объекта Parameters 
+        /// Проверяет, что при создании объекта Parameters
         /// устанавливаются значения параметров по умолчанию.
         /// </summary>
         [Test]
@@ -33,10 +36,10 @@ namespace DumbellPlugin.Tests
         }
 
         /// <summary>
-        /// /// <summary>
-        /// Проверяет, что вызов метода GetParameter с неверным типом  
+        /// ///.<summary>
+        /// Проверяет, что вызов метода GetParameter с неверным типом
         /// параметра генерирует исключение ArgumentException.
-        /// </summary> 
+        /// </summary>
         /// </summary>
         [Test]
         public void GetParameterWithInvalidTypeThrowsException()
@@ -137,7 +140,7 @@ namespace DumbellPlugin.Tests
         }
 
         /// <summary>
-        /// Проверяет генерацию исключения при попытке установить 
+        /// Проверяет генерацию исключения при попытке установить
         /// значение параметра вне допустимого диапазона.
         /// </summary>
         [Test]

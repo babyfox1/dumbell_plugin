@@ -280,7 +280,7 @@
             BuildButton.TabIndex = 24;
             BuildButton.Text = "Построить";
             BuildButton.UseVisualStyleBackColor = true;
-            BuildButton.Click += ButtonBuild_Click;
+            BuildButton.Click += BuildButton_Click;
             // 
             // MainForm
             // 

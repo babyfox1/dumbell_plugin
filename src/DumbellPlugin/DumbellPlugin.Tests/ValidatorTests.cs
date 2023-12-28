@@ -11,7 +11,6 @@ using NUnit.Framework;
 [TestFixture]
 public class ValidatorTests
 {
-
     /// <summary>
     /// Тест1.
     /// </summary>

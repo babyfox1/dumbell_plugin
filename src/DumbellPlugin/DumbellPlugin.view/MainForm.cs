@@ -18,11 +18,13 @@ namespace DumbellPlugin.View
         /// <summary>
         /// Ёкземпл€р класса параметров.
         /// </summary>
+        // TODO: RSDN
         private readonly Parameters parameters = new Parameters();
 
         /// <summary>
         /// Ёкземпл€р класса строител€.
         /// </summary>
+        // TODO: RSDN во всех пол€х
         private readonly Builder builder = new Builder();
 
         /// <summary>

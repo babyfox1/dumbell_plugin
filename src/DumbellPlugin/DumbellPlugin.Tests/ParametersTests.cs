@@ -1,10 +1,6 @@
 ﻿// <copyright file="ParametersTests.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
-
-// <copyright file="ParametersTests.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
 namespace DumbellPlugin.Tests
 {
     using DumbellPlugin.Model;
@@ -25,6 +21,9 @@ namespace DumbellPlugin.Tests
         {
             var parameters = new Parameters();
 
+            // TODO: код дублируется. Посмотрите в сторону атрибута TestCase, в который можно послать параметры.
+            // В вашем случае это два параметра: ParameterType и число, которому должно оно быть равно.
+            // Так сделать во всех тестах, где можно.
             Assert.That(parameters.GetParameter(ParameterType.LengthHandle), Is.EqualTo(500));
             Assert.That(parameters.GetParameter(ParameterType.DiameterHandle), Is.EqualTo(30));
             Assert.That(parameters.GetParameter(ParameterType.WidthFasten), Is.EqualTo(10));
@@ -36,10 +35,8 @@ namespace DumbellPlugin.Tests
         }
 
         /// <summary>
-        /// ///.<summary>
         /// Проверяет, что вызов метода GetParameter с неверным типом
         /// параметра генерирует исключение ArgumentException.
-        /// </summary>
         /// </summary>
         [Test]
         public void GetParameterWithInvalidTypeThrowsException()

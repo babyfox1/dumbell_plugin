@@ -4,7 +4,6 @@
 
 namespace DumbellPlugin.Model
 {
-    // TODO: подключить dll из папки Libs - Исправил
     using Kompas6API5;
     using Kompas6Constants3D;
 
@@ -22,8 +21,6 @@ namespace DumbellPlugin.Model
         /// Парраметр.
         /// </summary>
         private Parameters parameters = new Parameters();
-
-        // TODO: XML
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Builder"/> class.
@@ -60,7 +57,6 @@ namespace DumbellPlugin.Model
             // TODO: длинная строка
             var sketchHandle = this.wrapper.CreateSketch(Obj3dType.o3d_planeXOZ, -1 * lengthHandle / 2);
 
-            // TODO: naming
             var document2d = (ksDocument2D)sketchHandle.BeginEdit();
 
             // Создаем круг радиусом 50(радиус рукоятки)
@@ -81,31 +77,31 @@ namespace DumbellPlugin.Model
             double amountDisk = this.parameters.GetParameter(ParameterType.AmountDisk);
             double outerDiameterDisk = this.parameters.GetParameter(ParameterType.OuterDiameterDisk);
 
-            // TODO: нужно? - исправил
+            // TODO: нужен lengthHandle (не используется)?
             double lengthHandle = this.parameters.GetParameter(ParameterType.LengthHandle);
             double widthDisk = this.parameters.GetParameter(ParameterType.WidthDisk);
 
             double diameterHandle = this.parameters.GetParameter(ParameterType.DiameterHandle);
 
-            // TODO: магическое число - исправил
             // Создаем внутренний диаметр диска чуть больше диаметра рукоятки
+            // TODO: RSDN
             double hANDLE_INNER_DISK_PROP = 1.05;
             double changeInnerDiameterDisk = diameterHandle * hANDLE_INNER_DISK_PROP;
 
             // Создаем расстояние от центра до начала выдавливания дисков
+            // TODO: RSDN
             double eXTRUSION_LENGTH_DISK = 85.0;
 
             // Физическое расстояние между дисками
+            // TODO: RSDN
             double lENGHT_BTW_DISKS = 2.0;
 
             // Расстояние между началом выдавливания дисков
-            // TODO: магическое число - исправил
             double offset = widthDisk + lENGHT_BTW_DISKS;
 
             for (int i = 0; i < amountDisk; i++)
             {
                 // Создаем эскиз для первого диска на расстоянии 120 от начала координат
-                // TODO: магическое число
                 var sketch = this.wrapper.CreateSketch(Obj3dType.o3d_planeXOZ, eXTRUSION_LENGTH_DISK + (i * offset));
                 var document2d = (ksDocument2D)sketch.BeginEdit();
 
@@ -123,13 +119,11 @@ namespace DumbellPlugin.Model
             for (int i = 0; i < amountDisk; i++)
             {
                 // Создаем эскиз для первого диска на расстоянии 120 от начала координат
-                // TODO: магическое число
                 var sketch = this.wrapper.CreateSketch(
                     Obj3dType.o3d_planeXOZ,
                     (-1 * eXTRUSION_LENGTH_DISK) - widthDisk - (i * offset));
                 var document2d = (ksDocument2D)sketch.BeginEdit();
 
-                // TODO: комментарии над строкой
                 // Внешний круг радиусом 200
                 document2d.ksCircle(0, 0, outerDiameterDisk, 1);
 
@@ -145,20 +139,24 @@ namespace DumbellPlugin.Model
         private void BuildFastening()
         {
             // double WidthDisk = _parameters.GetParameter(ParameterType.WidthDisk);
-            // TODO: RSDN
+            // TODO: diameterFasten не используется. Нужен?
             double diameterFasten = this.parameters.GetParameter(ParameterType.DiameterFasten);
             double widthFasten = this.parameters.GetParameter(ParameterType.WidthFasten);
             double diameterHandle = this.parameters.GetParameter(ParameterType.DiameterHandle);
 
             // Соотношение диаметров крепления и рукоятки
+            // TODO: RSDN
             double rATIO_DIAMETER_HANDLE_FASTEN = 2.0;
             double changeDiameterFasten = diameterHandle * rATIO_DIAMETER_HANDLE_FASTEN;
 
             // Расстояние от центра, где будет начинать выдавливаться крепления
+            // TODO: RSDN
             double lENGTH_FASTEN_CREATE = 75.0;
 
             // Создаем эскиз для первого диска на расстоянии 120 от начала координат
             var sketch1 = this.wrapper.CreateSketch(Obj3dType.o3d_planeXOZ, (-1 * lENGTH_FASTEN_CREATE) - widthFasten);
+
+            // TODO: RSDN
             var document2d_1 = (ksDocument2D)sketch1.BeginEdit();
             document2d_1.ksCircle(0, 0, changeDiameterFasten, 1); // Внешний круг радиусом 200
 
@@ -168,6 +166,8 @@ namespace DumbellPlugin.Model
             this.wrapper.CreateExtrusion(sketch1, widthFasten, false);
 
             var sketch2 = this.wrapper.CreateSketch(Obj3dType.o3d_planeXOZ, 75);
+
+            // TODO: RSDN
             var document2d_2 = (ksDocument2D)sketch2.BeginEdit();
             document2d_2.ksCircle(0, 0, changeDiameterFasten, 1); // Внешний круг радиусом 200
 

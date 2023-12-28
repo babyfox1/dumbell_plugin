@@ -124,7 +124,9 @@ namespace DumbellPlugin.Model
             {
                 // Создаем эскиз для первого диска на расстоянии 120 от начала координат
                 // TODO: магическое число
-                var sketch = this.wrapper.CreateSketch(Obj3dType.o3d_planeXOZ, (-1 * eXTRUSION_LENGTH_DISK) - widthDisk - (i * offset));
+                var sketch = this.wrapper.CreateSketch(
+                    Obj3dType.o3d_planeXOZ,
+                    (-1 * eXTRUSION_LENGTH_DISK) - widthDisk - (i * offset));
                 var document2d = (ksDocument2D)sketch.BeginEdit();
 
                 // TODO: комментарии над строкой

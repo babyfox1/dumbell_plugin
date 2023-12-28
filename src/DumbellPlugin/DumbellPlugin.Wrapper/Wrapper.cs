@@ -32,7 +32,8 @@ namespace DumbellPlugin.Model
         {
             try
             {
-                this.Kompas = Activator.CreateInstance(Type.GetTypeFromProgID("KOMPAS.Application.5")) as KompasObject;
+                this.Kompas = Activator.CreateInstance(Type.
+                    GetTypeFromProgID("KOMPAS.Application.5")) as KompasObject;
 
                 if (this.Kompas != null)
                 {
@@ -85,7 +86,8 @@ namespace DumbellPlugin.Model
             offsetDef.direction = false;
             offsetEntity.Create();
 
-            return offsetEntity; // Возвращаем созданный объект смещенной плоскости
+            // Возвращаем созданный объект смещенной плоскости
+            return offsetEntity;
         }
 
         /// <summary>

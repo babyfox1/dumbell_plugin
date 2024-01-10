@@ -9,10 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DumbellPlugin.Model", "Dumb
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DumbellPlugin.Wrapper", "DumbellPlugin.Wrapper\DumbellPlugin.Wrapper.csproj", "{5971AB3C-EBF0-4B5A-8DD9-EF5FB8AC4447}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DumbellPlugin.Tests", "DumbellPlugin.Tests\DumbellPlugin.Tests.csproj", "{79D9697C-0E47-4A8A-8486-DDD05482A28E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StressTesting", "Stresstesting\StressTesting.csproj", "{59B579CB-7C92-4CD5-A250-9FA8038558FC}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,14 +27,6 @@ Global
 		{5971AB3C-EBF0-4B5A-8DD9-EF5FB8AC4447}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5971AB3C-EBF0-4B5A-8DD9-EF5FB8AC4447}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5971AB3C-EBF0-4B5A-8DD9-EF5FB8AC4447}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79D9697C-0E47-4A8A-8486-DDD05482A28E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79D9697C-0E47-4A8A-8486-DDD05482A28E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79D9697C-0E47-4A8A-8486-DDD05482A28E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79D9697C-0E47-4A8A-8486-DDD05482A28E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{59B579CB-7C92-4CD5-A250-9FA8038558FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{59B579CB-7C92-4CD5-A250-9FA8038558FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{59B579CB-7C92-4CD5-A250-9FA8038558FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{59B579CB-7C92-4CD5-A250-9FA8038558FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

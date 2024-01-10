@@ -1,12 +1,5 @@
-// <copyright file="Program.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
 namespace DumbellPlugin.View
 {
-    using System;
-    using System.Windows.Forms;
-
     /// <summary>
     /// Программа.
     /// </summary>
@@ -18,8 +11,7 @@ namespace DumbellPlugin.View
         [STAThread]
         private static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            ApplicationConfiguration.Initialize();
             Application.Run(new MainForm());
         }
     }

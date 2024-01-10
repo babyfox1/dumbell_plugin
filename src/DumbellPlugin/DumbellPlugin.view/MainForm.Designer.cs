@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            var resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             LengthHandleLabel = new Label();
             LengthHandleTextBox = new TextBox();
             label2 = new Label();
@@ -54,6 +54,10 @@
             AmountDiskTextBox = new TextBox();
             AmountDiskLabel = new Label();
             BuildButton = new Button();
+            Ladder45DegreeRadioButton = new RadioButton();
+            Ladder30DegreeRadioButton = new RadioButton();
+            label1 = new Label();
+            NormRadioButton = new RadioButton();
             SuspendLayout();
             // 
             // LengthHandleLabel
@@ -274,19 +278,67 @@
             // 
             // BuildButton
             // 
-            BuildButton.Location = new Point(295, 316);
+            BuildButton.Location = new Point(290, 316);
             BuildButton.Name = "BuildButton";
-            BuildButton.Size = new Size(95, 23);
+            BuildButton.Size = new Size(100, 23);
             BuildButton.TabIndex = 24;
             BuildButton.Text = "Построить";
             BuildButton.UseVisualStyleBackColor = true;
             BuildButton.Click += BuildButton_Click;
+            // 
+            // Ladder45DegreeRadioButton
+            // 
+            Ladder45DegreeRadioButton.AutoSize = true;
+            Ladder45DegreeRadioButton.Location = new Point(385, 374);
+            Ladder45DegreeRadioButton.Name = "Ladder45DegreeRadioButton";
+            Ladder45DegreeRadioButton.Size = new Size(89, 19);
+            Ladder45DegreeRadioButton.TabIndex = 25;
+            Ladder45DegreeRadioButton.TabStop = true;
+            Ladder45DegreeRadioButton.Text = "45 градусов";
+            Ladder45DegreeRadioButton.UseVisualStyleBackColor = true;
+            Ladder45DegreeRadioButton.CheckedChanged += Ladder45DegreeRadioButton_CheckedChanged;
+            // 
+            // Ladder30DegreeRadioButton
+            // 
+            Ladder30DegreeRadioButton.AutoSize = true;
+            Ladder30DegreeRadioButton.Location = new Point(290, 374);
+            Ladder30DegreeRadioButton.Name = "Ladder30DegreeRadioButton";
+            Ladder30DegreeRadioButton.Size = new Size(89, 19);
+            Ladder30DegreeRadioButton.TabIndex = 26;
+            Ladder30DegreeRadioButton.TabStop = true;
+            Ladder30DegreeRadioButton.Text = "30 градусов";
+            Ladder30DegreeRadioButton.UseVisualStyleBackColor = true;
+            Ladder30DegreeRadioButton.CheckedChanged += Ladder30DegreeRadioButton_CheckedChanged;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(115, 376);
+            label1.Name = "label1";
+            label1.Size = new Size(164, 15);
+            label1.TabIndex = 27;
+            label1.Text = "Построить диски под углом:";
+            // 
+            // NormRadioButton
+            // 
+            NormRadioButton.AutoSize = true;
+            NormRadioButton.Location = new Point(477, 374);
+            NormRadioButton.Name = "NormRadioButton";
+            NormRadioButton.Size = new Size(91, 19);
+            NormRadioButton.TabIndex = 28;
+            NormRadioButton.TabStop = true;
+            NormRadioButton.Text = "Убрать угол";
+            NormRadioButton.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(699, 450);
+            Controls.Add(NormRadioButton);
+            Controls.Add(label1);
+            Controls.Add(Ladder30DegreeRadioButton);
+            Controls.Add(Ladder45DegreeRadioButton);
             Controls.Add(BuildButton);
             Controls.Add(label9);
             Controls.Add(WidthDiskTextBox);
@@ -348,5 +400,9 @@
         private TextBox AmountDiskTextBox;
         private Label AmountDiskLabel;
         private Button BuildButton;
+        private RadioButton Ladder45DegreeRadioButton;
+        private RadioButton Ladder30DegreeRadioButton;
+        private Label label1;
+        private RadioButton NormRadioButton;
     }
 }

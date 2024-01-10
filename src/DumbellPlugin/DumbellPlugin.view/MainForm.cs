@@ -148,7 +148,7 @@ namespace DumbellPlugin.View
                 var parameterType = ParameterType.Unknown;
 
                 var parameterTypeStr =
-                    textBoxName.Split('_')[1];
+                    textBox.Name.Remove(textBoxName.Length - "TextBox".Length);
 
                 foreach (var item in this.parameterFormElements.Keys)
                 {
@@ -232,7 +232,28 @@ namespace DumbellPlugin.View
         /// <param name="e">параметр2.</param>
         private void BuildButton_Click(object sender, EventArgs e)
         {
-            this.builder.BuildDetail(this.parameters);
+            if (Ladder30DegreeRadioButton.Checked)
+            {
+                this.builder.BuildDetail30Ladder(parameters);
+            }
+            else if (Ladder45DegreeRadioButton.Checked)
+            {
+                this.builder.BuildDetail45Ladder(parameters);
+            }
+            else
+            {
+                this.builder.BuildDetail(parameters);
+            }
+        }
+
+        private void Ladder30DegreeRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            // Дополнительной логики при изменении радиобаттона, если нужно
+        }
+
+        private void Ladder45DegreeRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            // Дополнительной логики при изменении радиобаттона, если нужно
         }
     }
 }

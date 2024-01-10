@@ -1,143 +1,46 @@
-﻿// <copyright file="ValidatorTests.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-using DumbellPlugin.Model;
-using NUnit.Framework;
-
-/// <summary>
-/// Тесты валидации.
-/// </summary>
-[TestFixture]
-public class ValidatorTests
+﻿
+namespace DumbellPlugin.Tests
 {
-    /// <summary>
-    /// Тест1.
-    /// </summary>
-    /// <param name="value">Парам3.</param>
-    /// <param name="minValue">Парам1.</param>
-    /// <param name="maxValue">Парам2.</param>
-    [TestCase(5.0, 1.0, 10.0)]
-    [TestCase(7.5, 5.0, 10.0)]
-    public void ValidateRange_ShouldNotThrowException(
-        double value,
-        double minValue,
-        double maxValue)
-    {
-        // Act, Assert
-        Assert.DoesNotThrow(() =>
-            Validator.ValidateRange(value, minValue, maxValue));
-    }
+    using DumbellPlugin.Model;
+    using NUnit.Framework;
 
-    /// <summary>
-    /// Тест2.
-    /// </summary>
-    /// <param name="value">Парам3.</param>
-    /// <param name="minValue">Парам1.</param>
-    /// <param name="maxValue">Парам2.</param>
-    [TestCase(5.0, 10.0, 1.0)]
-    [TestCase(7.5, 10.0, 5.0)]
-    public void ValidateRange_ShouldThrowArgumentException(
-        double value,
-        double minValue,
-        double maxValue)
+    [TestFixture]
+    public class ValidatorTests
     {
-        // Act, Assert
-        Assert.Throws<ArgumentException>(() =>
-            Validator.ValidateRange(value, minValue, maxValue));
-    }
+        [TestCase(100, -100, 100,
+            Description = "Check if the maximum number is within the specified range")]
+        [TestCase(-100, -100, 100,
+            Description = "Check if the minimum number is within the specified range")]
+        [TestCase(0, -100, 100,
+            Description = "Check if zero is within the specified range")]
+        [TestCase(100, 100, 100,
+            Description = "Check if both maximum and minimum numbers are within the specified range")]
+        public void TestIsValueInRange_ValueInRange_ResultEqual(
+            double currentValue,
+            double minValue,
+            double maxValue)
+        {
+            // Act
+            var result = Validator.IsNumberInRange(currentValue, minValue, maxValue);
 
-    /// <summary>
-    /// Тест3.
-    /// </summary>
-    /// <param name="minValue">Парам1.</param>
-    /// <param name="maxValue">Парам2.</param>
-    [TestCase(5.0, 10.0)]
-    [TestCase(0.5, 5.0)]
-    public void ValidateMinMax_ShouldNotThrowException(
-        double minValue,
-        double maxValue)
-    {
-        // Act, Assert
-        Assert.DoesNotThrow(() =>
-            Validator.ValidateMinMax(minValue, maxValue));
-    }
+            // Assert
+            Assert.IsTrue(result);
+        }
 
-    /// <summary>
-    /// Тест4.
-    /// </summary>
-    /// <param name="minValue">Парам1.</param>
-    /// <param name="maxValue">Парам2.</param>
-    [TestCase(5.0, 1.0)]
-    [TestCase(8, 7.5)]
-    public void ValidateMinMax_ShouldThrowArgumentException(
-        double minValue,
-        double maxValue)
-    {
-        // Act, Assert
-        Assert.Throws<ArgumentException>(() =>
-            Validator.ValidateMinMax(minValue, maxValue));
-    }
+        [TestCase(101, -100, 100,
+            Description = "Check if the specified number is beyond the maximum range")]
+        [TestCase(-100.01, -100, 100,
+            Description = "Check if the specified number is beyond the minimum range")]
+        public void TestIsValueInRange_ValueNotInRange_ResultEqual(
+            double currentValue,
+            double minValue,
+            double maxValue)
+        {
+            // Act
+            var result = Validator.IsNumberInRange(currentValue, minValue, maxValue);
 
-    /// <summary>
-    /// Тест5.
-    /// </summary>
-    /// <param name="value">Парам1.</param>
-    [TestCase(5.0)]
-    [TestCase(7.5)]
-    public void ValidateNonNegative_ShouldNotThrowException(double value)
-    {
-        // Act, Assert
-        Assert.DoesNotThrow(() => Validator.ValidateNonNegative(value));
-    }
-
-    /// <summary>
-    /// Test1.
-    /// </summary>
-    /// <param name="value">Парам1.</param>
-    [TestCase(-5.0)]
-    [TestCase(0)]
-    public void ValidateNonNegative_ShouldThrowArgumentException(
-        double value)
-    {
-        // Act, Assert
-        Assert.Throws<ArgumentException>(() =>
-            Validator.ValidateNonNegative(value));
-    }
-
-    /// <summary>
-    /// Test1.
-    /// </summary>
-    /// <param name="value">Парам1.</param>
-    /// <param name="minValue">Парам2.</param>
-    /// <param name="maxValue">Парам3.</param>
-    [TestCase(5.0, 1.0, 10.0)]
-    [TestCase(7.5, 5.0, 10.0)]
-    public void AssertNumberIsInRange_ShouldNotThrowException(
-        double value,
-        double minValue,
-        double maxValue)
-    {
-        // Act, Assert
-        Assert.DoesNotThrow(() =>
-            Validator.AssertNumberIsInRange(value, minValue, maxValue));
-    }
-
-    /// <summary>
-    /// Test2.
-    /// </summary>
-    /// <param name="value">Парам1.</param>
-    /// <param name="minValue">Парам2.</param>
-    /// <param name="maxValue">Парам3.</param>
-    [TestCase(5.0, 10.0, 1.0)]
-    [TestCase(7.5, 10.0, 5.0)]
-    public void AssertNumberIsInRange_ShouldThrowException(
-        double value,
-        double minValue,
-        double maxValue)
-    {
-        // Act, Assert
-        Assert.Throws<ArgumentException>(() =>
-            Validator.AssertNumberIsInRange(value, minValue, maxValue));
+            // Assert
+            Assert.IsFalse(result);
+        }
     }
 }

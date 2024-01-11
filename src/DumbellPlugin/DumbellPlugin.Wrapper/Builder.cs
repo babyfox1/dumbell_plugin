@@ -26,6 +26,7 @@ namespace DumbellPlugin.Model
         /// Initializes a new instance of the <see cref="Builder"/> class.
         /// Конструктор.
         /// </summary>
+        // TODO: если не используется, то убрать
         public Builder()
         {
         }
@@ -83,8 +84,6 @@ namespace DumbellPlugin.Model
             double lengthHandle = parameters.GetParameter(ParameterType.LengthHandle);
             double diameterHandle = parameters.GetParameter(ParameterType.DiameterHandle);
 
-            // Создаем эскиз влево
-            // TODO: длинная строка
             var sketchHandle = wrapper.CreateSketch(
                 Obj3dType.o3d_planeXOZ, -1 * lengthHandle / 2);
 
@@ -96,13 +95,13 @@ namespace DumbellPlugin.Model
             sketchHandle.EndEdit();
 
             // Теперь передаем этот эскиз в метод CreateExtrusion
-            // TODO: нужно?
             wrapper.CreateExtrusion(sketchHandle, lengthHandle, false);
         }
 
         /// <summary>
         /// Строит диски детали.
         /// </summary>
+        // TODO: код дублируется с BuildDisks30Ladder и BuildDisks45Ladder
         private void BuildDisks()
         {
             double amountDisk = parameters.GetParameter(ParameterType.AmountDisk);
@@ -111,7 +110,7 @@ namespace DumbellPlugin.Model
             double diameterHandle = parameters.GetParameter(ParameterType.DiameterHandle);
 
             // Создаем внутренний диаметр диска чуть больше диаметра рукоятки
-            // TODO: RSDN
+            // TODO: RSDN Все еще неправильное оформление (см. https://rsdn.org/article/mag/200401/codestyle.XML). Также ниже
             double hANDLE_INNER_DISK_PROP = 1.05;
             double changeInnerDiameterDisk = diameterHandle * hANDLE_INNER_DISK_PROP;
 
@@ -163,6 +162,7 @@ namespace DumbellPlugin.Model
             }
         }
 
+        // TODO: XML
         private void BuildDisks30Ladder()
         {
             double amountDisk = parameters.GetParameter(ParameterType.AmountDisk);
@@ -252,6 +252,7 @@ namespace DumbellPlugin.Model
             }
         }
 
+        // TODO: XML
         private void BuildDisks45Ladder()
         {
             double amountDisk = parameters.GetParameter(ParameterType.AmountDisk);

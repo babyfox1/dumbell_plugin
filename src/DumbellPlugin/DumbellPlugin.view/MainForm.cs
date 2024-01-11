@@ -246,11 +246,13 @@ namespace DumbellPlugin.View
             }
         }
 
+        // TODO: убрать, если не используетс€
         private void Ladder30DegreeRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             // ƒополнительной логики при изменении радиобаттона, если нужно
         }
 
+        // TODO: убрать, если не используетс€
         private void Ladder45DegreeRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             // ƒополнительной логики при изменении радиобаттона, если нужно

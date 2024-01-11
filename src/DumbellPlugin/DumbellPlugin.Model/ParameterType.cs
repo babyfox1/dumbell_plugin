@@ -52,6 +52,12 @@ namespace DumbellPlugin.Model
         /// <summary>
         /// Неизвестный тип параметра.
         /// </summary>
+        // TODO: нигде не использует это значение,
+        // только в TextBox_TextChanged для задания значения в parameterType.
+        // Вместо этого можно использовать тип "ParameterType?".
+        // Данный тип говорит о том, что он может иметь значения, что и в перечисление,
+        // а также может принимать значение null.
+        // В вашем примере можно будет заменить так "ParameterType? parameterType = null;".
         Unknown,
     }
 }

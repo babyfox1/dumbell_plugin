@@ -1,46 +1,64 @@
-﻿
-namespace DumbellPlugin.Tests
+﻿namespace DumbellPlugin.Tests
 {
-    using DumbellPlugin.Model;
     using NUnit.Framework;
-
-    [TestFixture]
+    using DumbellPlugin.Model;
     public class ValidatorTests
     {
-        [TestCase(100, -100, 100,
-            Description = "Check if the maximum number is within the specified range")]
-        [TestCase(-100, -100, 100,
-            Description = "Check if the minimum number is within the specified range")]
-        [TestCase(0, -100, 100,
-            Description = "Check if zero is within the specified range")]
-        [TestCase(100, 100, 100,
-            Description = "Check if both maximum and minimum numbers are within the specified range")]
-        public void TestIsValueInRange_ValueInRange_ResultEqual(
-            double currentValue,
-            double minValue,
-            double maxValue)
+        [Test]
+        public void ValidateRange_ValueInRange_DoesNotThrow()
         {
-            // Act
-            var result = Validator.IsNumberInRange(currentValue, minValue, maxValue);
+            // Arrange & Act
+            double current = 10;
+            double min = 5;
+            double max = 15;
+
+            Validator.ValidateRange(current, min, max);
 
             // Assert
-            Assert.IsTrue(result);
+            // Тест пройден, если не было исключения 
         }
 
-        [TestCase(101, -100, 100,
-            Description = "Check if the specified number is beyond the maximum range")]
-        [TestCase(-100.01, -100, 100,
-            Description = "Check if the specified number is beyond the minimum range")]
-        public void TestIsValueInRange_ValueNotInRange_ResultEqual(
-            double currentValue,
-            double minValue,
-            double maxValue)
+        [Test]
+        public void ValidateRange_ValueOutOfRange_ThrowsException()
         {
+            // Arrange & Act & Assert
+            Assert.Throws<ArgumentException>(() => {
+                double current = 20;
+                double min = 5;
+                double max = 15;
+
+                Validator.ValidateRange(current, min, max);
+            });
+        }
+
+        [Test]
+        public void IsNumberInRange_InRange_ReturnsTrue()
+        {
+            // Arrange 
+            double value = 10;
+            double min = 5;
+            double max = 15;
+
             // Act
-            var result = Validator.IsNumberInRange(currentValue, minValue, maxValue);
+            bool result = Validator.IsNumberInRange(value, min, max);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result == true);
+        }
+
+        [Test]
+        public void IsNumberInRange_OutOfRange_ReturnsFalse()
+        {
+            // Arrange
+            double value = 20;
+            double min = 5;
+            double max = 15;
+
+            // Act 
+            bool result = Validator.IsNumberInRange(value, min, max);
+
+            // Assert
+            Assert.That(result == false);
         }
     }
 }

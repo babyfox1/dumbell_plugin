@@ -2,58 +2,59 @@
 {
     using DumbellPlugin.Model;
     using NUnit.Framework;
-    using System.Collections.Generic;
 
-    [TestFixture]
     public class ParametersTests
     {
-        [Test]
-        public void Parameters_InitializedCorrectly()
+        private Parameters parameters;
+
+        [SetUp]
+        public void Setup()
         {
-            // Arrange
-            var parameters = new Parameters();
+            parameters = new Parameters();
+        }
 
-            // Act
-
-            // Assert
+        [Test]
+        public void Ctor_InitializesParameters()
+        {
             Assert.That(parameters.ParametersDict, Is.Not.Null);
-            Assert.That(parameters.ParametersDict, Is.InstanceOf<Dictionary<ParameterType, Parameter>>());
+            Assert.That(parameters.ParametersDict.Count, Is.EqualTo(8));
         }
 
         [Test]
-        public void Parameters_SetAndGetMethods_WorkingCorrectly()
+        public void GetParameter_WithValidType_ReturnsValue()
         {
-            // Arrange
-            var hairbrushParameters = new Parameters();
-            var newParameters = new Dictionary<ParameterType, Parameter>
-            {
-                { ParameterType.LengthHandle, new Parameter(60, 180, 120) },
-            };
+            var length = parameters.GetParameter(ParameterType.LengthHandle);
 
-            // Act
-            hairbrushParameters.ParametersDict = newParameters;
-            var retrievedParameters = hairbrushParameters.ParametersDict;
-
-            // Assert
-            Assert.That(retrievedParameters, Is.EqualTo(newParameters));
+            Assert.That(length, Is.EqualTo(500));
         }
 
-        [TestCase(ParameterType.LengthHandle, 50,
-            Description = "Ensure that the value of LengthHandle is within the specified minimum and maximum values")]
-        [TestCase(ParameterType.DiameterHandle, 20,
-            Description = "Ensure that the value of DiameterHandle is within the specified minimum and maximum values")]
-        // Add more test cases to cover different parameter types and values
-        public void Parameters_ValuesInRange(ParameterType parameterType, int expectedValue)
+        [Test]
+        public void GetParameter_WithInvalidType_ThrowsException()
         {
-            // Arrange
-            var parameters = new Parameters();
+            Assert.Throws<ArgumentException>(() =>
+                parameters.GetParameter(ParameterType.Unknown));
+        }
 
-            // Act
-            var actualValue = parameters.ParametersDict[parameterType].CurrentValue;
+        [Test]
+        public void AssertParameter_WithValidData_SetsNewValue()
+        {
+            parameters.AssertParameter(ParameterType.LengthHandle,
+               parameters.ParametersDict[ParameterType.LengthHandle], 550);
 
-            // Assert
-            Assert.That(actualValue, Is.GreaterThanOrEqualTo(parameters.ParametersDict[parameterType].MinValue));
-            Assert.That(actualValue, Is.LessThanOrEqualTo(parameters.ParametersDict[parameterType].MaxValue));
+            var length = parameters.GetParameter(ParameterType.LengthHandle);
+
+            Assert.That(length, Is.EqualTo(550));
+        }
+
+        [Test]
+        public void AssertParameter_ValueOutOfRange_ThrowsException()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                parameters.AssertParameter(
+                    ParameterType.LengthHandle,
+                    parameters.ParametersDict[ParameterType.LengthHandle],
+                    700)
+            );
         }
     }
 }

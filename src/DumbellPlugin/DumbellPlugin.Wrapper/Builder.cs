@@ -13,6 +13,11 @@ namespace DumbellPlugin.Model
     public class Builder
     {
         /// <summary>
+        /// Значение угла для лесенки из дисков.
+        /// </summary>
+        public double Degrees;
+
+        /// <summary>
         /// Экземпляр класса обертки.
         /// </summary>
         private readonly Wrapper wrapper = new Wrapper();
@@ -46,45 +51,15 @@ namespace DumbellPlugin.Model
         }
 
         /// <summary>
-        /// Ladder.
-        /// </summary>
-        /// <param name="parameters">Patram.</param>
-        public void BuildDetail30Ladder(Parameters parameters)
-        {
-            this.parameters = parameters;
-            wrapper.ConnectToKompas();
-            wrapper.CreateDocument3D();
-
-            BuildHandle();
-            BuildDisks30Ladder();
-            BuildFastening();
-        }
-
-        /// <summary>
-        /// Ladder.
-        /// </summary>
-        /// <param name="parameters">Patram.</param>
-        public void BuildDetail45Ladder(Parameters parameters)
-        {
-            this.parameters = parameters;
-            wrapper.ConnectToKompas();
-            wrapper.CreateDocument3D();
-
-            BuildHandle();
-            BuildDisks45Ladder();
-            BuildFastening();
-        }
-
-        /// <summary>
         /// Строит рукоятку.
         /// </summary>
         public void BuildHandle()
         {
             double lengthHandle = parameters.GetParameter(ParameterType.LengthHandle);
-            double diameterHandle = parameters.GetParameter(ParameterType.DiameterHandle);
+            double diameterHandle = parameters.GetParameter(
+                ParameterType.DiameterHandle);
 
             // Создаем эскиз влево
-            // TODO: длинная строка
             var sketchHandle = wrapper.CreateSketch(
                 Obj3dType.o3d_planeXOZ, -1 * lengthHandle / 2);
 
@@ -96,13 +71,9 @@ namespace DumbellPlugin.Model
             sketchHandle.EndEdit();
 
             // Теперь передаем этот эскиз в метод CreateExtrusion
-            // TODO: нужно?
             wrapper.CreateExtrusion(sketchHandle, lengthHandle, false);
         }
 
-        /// <summary>
-        /// Строит диски детали.
-        /// </summary>
         private void BuildDisks()
         {
             double amountDisk = parameters.GetParameter(ParameterType.AmountDisk);
@@ -111,92 +82,49 @@ namespace DumbellPlugin.Model
             double diameterHandle = parameters.GetParameter(ParameterType.DiameterHandle);
 
             // Создаем внутренний диаметр диска чуть больше диаметра рукоятки
-            // TODO: RSDN
-            double hANDLE_INNER_DISK_PROP = 1.05;
-            double changeInnerDiameterDisk = diameterHandle * hANDLE_INNER_DISK_PROP;
+            const double HANDLE_INNER_DISK_PROP = 1.05;
+            double changeInnerDiameterDisk = diameterHandle * HANDLE_INNER_DISK_PROP;
 
             // Создаем расстояние от центра до начала выдавливания дисков
-            // TODO: RSDN
-            double eXTRUSION_LENGTH_DISK = 85.0;
+            const double EXTRUSION_LENGTH_DISK = 85.0;
 
             // Физическое расстояние между дисками
-            // TODO: RSDN
-            double lENGHT_BTW_DISKS = 2.0;
+            const double LENGHT_BTW_DISKS = 2.0;
 
-            // Расстояние между началом выдавливания дисков
-            double offset = widthDisk + lENGHT_BTW_DISKS;
-
-            for (int i = 0; i < amountDisk; i++)
-            {
-                // Создаем эскиз для первого диска на расстоянии 120 от начала координат
-                var sketch = wrapper.CreateSketch(Obj3dType.o3d_planeXOZ, eXTRUSION_LENGTH_DISK + (i * offset));
-                var document2d = (ksDocument2D)sketch.BeginEdit();
-
-                // Внешний круг радиусом 200
-                document2d.ksCircle(0, 0, outerDiameterDisk, 1);
-
-                // Внутренний круг радиусом 50
-                document2d.ksCircle(0, 0, changeInnerDiameterDisk, 1);
-                sketch.EndEdit();
-
-                // Выдавливаем первый диск в положительном направлении на 20
-                wrapper.CreateExtrusion(sketch, widthDisk, false);
-            }
-
-            for (int i = 0; i < amountDisk; i++)
-            {
-                // Создаем эскиз для первого диска на расстоянии 120 от начала координат
-                var sketch = wrapper.CreateSketch(
-                    Obj3dType.o3d_planeXOZ,
-                    (-1 * eXTRUSION_LENGTH_DISK) - widthDisk - (i * offset));
-                var document2d = (ksDocument2D)sketch.BeginEdit();
-
-                // Внешний круг радиусом 200
-                document2d.ksCircle(0, 0, outerDiameterDisk, 1);
-
-                // Внутренний круг радиусом 50
-                document2d.ksCircle(0, 0, changeInnerDiameterDisk, 1);
-                sketch.EndEdit();
-
-                // Выдавливаем первый диск в положительном направлении на 20
-                wrapper.CreateExtrusion(sketch, widthDisk, false);
-            }
-        }
-
-        private void BuildDisks30Ladder()
-        {
-            double amountDisk = parameters.GetParameter(ParameterType.AmountDisk);
-            double outerDiameterDisk = parameters.GetParameter(ParameterType.OuterDiameterDisk);
-            double widthDisk = parameters.GetParameter(ParameterType.WidthDisk);
-            double diameterHandle = parameters.GetParameter(ParameterType.DiameterHandle);
-
-            // Создаем внутренний диаметр диска чуть больше диаметра рукоятки
-            // TODO: RSDN
-            double hANDLE_INNER_DISK_PROP = 1.05;
-            double changeInnerDiameterDisk = diameterHandle * hANDLE_INNER_DISK_PROP;
-
-            // Создаем расстояние от центра до начала выдавливания дисков
-            // TODO: RSDN
-            double eXTRUSION_LENGTH_DISK = 85.0;
-
-            // Физическое расстояние между дисками
-            // TODO: RSDN
-            double lENGHT_BTW_DISKS = 2.0;
-
-            // Присваиваем значение внешнего радиуса временной переменной, которая будет уменьшаться.
+            // Присваиваем значение внешнего радиуса временной переменной,
+            // которая будет уменьшаться.
             double prevOuterDiameter = outerDiameterDisk;
 
             // Расстояние между началом выдавливания дисков
-            double offset = widthDisk + lENGHT_BTW_DISKS;
+            double offset = widthDisk + LENGHT_BTW_DISKS;
 
-            double sIN_60 = 0.866;
+            // Синусы углов.
+            const double SIN_60 = 0.866;
+            const double SIN_45 = 0.707;
+            const double SIN_90 = 1;
+
+            // Переменная, которой как раз и будет присваиваться значение синуса.
+            double tempSin;
+
+            if (Degrees == 30)
+            {
+                tempSin = SIN_60;
+            }
+            else if (Degrees == 45)
+            {
+                tempSin = SIN_45;
+            }
+            else
+            {
+                tempSin = SIN_90;
+            }
 
             for (int i = 0; i < amountDisk; i++)
             {
                 double newOuterDiameter;
                 if (i != 0)
                 {
-                    newOuterDiameter = prevOuterDiameter * sIN_60;
+                    newOuterDiameter = prevOuterDiameter * tempSin;
                 }
                 else
                 {
@@ -204,7 +132,8 @@ namespace DumbellPlugin.Model
                 }
 
                 // Создаем эскиз для первого диска на расстоянии 120 от начала координат
-                var sketch = wrapper.CreateSketch(Obj3dType.o3d_planeXOZ, eXTRUSION_LENGTH_DISK + (i * offset));
+                var sketch = wrapper.CreateSketch(
+                    Obj3dType.o3d_planeXOZ, EXTRUSION_LENGTH_DISK + (i * offset));
                 var document2d = (ksDocument2D)sketch.BeginEdit();
 
                 // Внешний круг радиусом 200
@@ -226,7 +155,7 @@ namespace DumbellPlugin.Model
                 double newOuterDiameter;
                 if (i != 0)
                 {
-                    newOuterDiameter = prevOuterDiameter * sIN_60;
+                    newOuterDiameter = prevOuterDiameter * tempSin;
                 }
                 else
                 {
@@ -236,7 +165,7 @@ namespace DumbellPlugin.Model
                 // Создаем эскиз для первого диска на расстоянии 120 от начала координат
                 var sketch = wrapper.CreateSketch(
                     Obj3dType.o3d_planeXOZ,
-                    (-1 * eXTRUSION_LENGTH_DISK) - widthDisk - (i * offset));
+                    (-1 * EXTRUSION_LENGTH_DISK) - widthDisk - (i * offset));
                 var document2d = (ksDocument2D)sketch.BeginEdit();
 
                 // Внешний круг радиусом 200
@@ -252,95 +181,9 @@ namespace DumbellPlugin.Model
             }
         }
 
-        private void BuildDisks45Ladder()
-        {
-            double amountDisk = parameters.GetParameter(ParameterType.AmountDisk);
-            double outerDiameterDisk = parameters.GetParameter(ParameterType.OuterDiameterDisk);
-            double widthDisk = parameters.GetParameter(ParameterType.WidthDisk);
-            double diameterHandle = parameters.GetParameter(ParameterType.DiameterHandle);
-
-            // Создаем внутренний диаметр диска чуть больше диаметра рукоятки
-            // TODO: RSDN
-            double hANDLE_INNER_DISK_PROP = 1.05;
-            double changeInnerDiameterDisk = diameterHandle * hANDLE_INNER_DISK_PROP;
-
-            // Создаем расстояние от центра до начала выдавливания дисков
-            // TODO: RSDN
-            double eXTRUSION_LENGTH_DISK = 85.0;
-
-            // Физическое расстояние между дисками
-            // TODO: RSDN
-            double lENGHT_BTW_DISKS = 2.0;
-
-            // Присваиваем значение внешнего радиуса временной переменной, которая будет уменьшаться.
-            double prevOuterDiameter = outerDiameterDisk;
-
-            // Расстояние между началом выдавливания дисков
-            double offset = widthDisk + lENGHT_BTW_DISKS;
-
-            double sIN_45 = 0.707;
-
-            for (int i = 0; i < amountDisk; i++)
-            {
-                double newOuterDiameter;
-                if (i != 0)
-                {
-                    newOuterDiameter = prevOuterDiameter * sIN_45;
-                }
-                else
-                {
-                    newOuterDiameter = prevOuterDiameter;
-                }
-
-                // Создаем эскиз для первого диска на расстоянии 120 от начала координат
-                var sketch = wrapper.CreateSketch(Obj3dType.o3d_planeXOZ, eXTRUSION_LENGTH_DISK + (i * offset));
-                var document2d = (ksDocument2D)sketch.BeginEdit();
-
-                // Внешний круг радиусом 200
-                document2d.ksCircle(0, 0, newOuterDiameter, 1);
-
-                // Внутренний круг радиусом 50
-                document2d.ksCircle(0, 0, changeInnerDiameterDisk, 1);
-                sketch.EndEdit();
-
-                // Выдавливаем первый диск в положительном направлении на 20
-                wrapper.CreateExtrusion(sketch, widthDisk, false);
-                prevOuterDiameter = newOuterDiameter;
-            }
-
-            prevOuterDiameter = outerDiameterDisk;
-
-            for (int i = 0; i < amountDisk; i++)
-            {
-                double newOuterDiameter;
-                if (i != 0)
-                {
-                    newOuterDiameter = prevOuterDiameter * sIN_45;
-                }
-                else
-                {
-                    newOuterDiameter = prevOuterDiameter;
-                }
-
-                // Создаем эскиз для первого диска на расстоянии 120 от начала координат
-                var sketch = wrapper.CreateSketch(
-                    Obj3dType.o3d_planeXOZ,
-                    (-1 * eXTRUSION_LENGTH_DISK) - widthDisk - (i * offset));
-                var document2d = (ksDocument2D)sketch.BeginEdit();
-
-                // Внешний круг радиусом 200
-                document2d.ksCircle(0, 0, newOuterDiameter, 1);
-
-                // Внутренний круг радиусом 50
-                document2d.ksCircle(0, 0, changeInnerDiameterDisk, 1);
-                sketch.EndEdit();
-
-                // Выдавливаем первый диск в положительном направлении на 20
-                wrapper.CreateExtrusion(sketch, widthDisk, false);
-                prevOuterDiameter = newOuterDiameter;
-            }
-        }
-
+        /// <summary>
+        /// Построение крепления.
+        /// </summary>
         private void BuildFastening()
         {
             // double WidthDisk = _parameters.GetParameter(ParameterType.WidthDisk);
@@ -348,20 +191,19 @@ namespace DumbellPlugin.Model
             double diameterHandle = parameters.GetParameter(ParameterType.DiameterHandle);
 
             // Соотношение диаметров крепления и рукоятки
-            // TODO: RSDN
-            double rATIO_DIAMETER_HANDLE_FASTEN = 2.0;
-            double changeDiameterFasten = diameterHandle * rATIO_DIAMETER_HANDLE_FASTEN;
+            const double RATIO_DIAMETER_HANDLE_FASTEN = 2.0;
+            double changeDiameterFasten = diameterHandle * RATIO_DIAMETER_HANDLE_FASTEN;
 
             // Расстояние от центра, где будет начинать выдавливаться крепления
-            // TODO: RSDN
-            double lENGTH_FASTEN_CREATE = 75.0;
+            const double LENGTH_FASTEN_CREATE = 75.0;
 
             // Создаем эскиз для первого диска на расстоянии 120 от начала координат
-            var sketch1 = wrapper.CreateSketch(Obj3dType.o3d_planeXOZ, (-1 * lENGTH_FASTEN_CREATE) - widthFasten);
+            var sketch1 = wrapper.CreateSketch(
+                Obj3dType.o3d_planeXOZ, (-1 * LENGTH_FASTEN_CREATE) - widthFasten);
 
-            // TODO: RSDN
+            // Внешний круг радиусом 200.
             var document2d_1 = (ksDocument2D)sketch1.BeginEdit();
-            document2d_1.ksCircle(0, 0, changeDiameterFasten, 1); // Внешний круг радиусом 200
+            document2d_1.ksCircle(0, 0, changeDiameterFasten, 1);
 
             sketch1.EndEdit();
 
@@ -370,9 +212,9 @@ namespace DumbellPlugin.Model
 
             var sketch2 = wrapper.CreateSketch(Obj3dType.o3d_planeXOZ, 75);
 
-            // TODO: RSDN
+            // Внешний круг радиусом 200.
             var document2d_2 = (ksDocument2D)sketch2.BeginEdit();
-            document2d_2.ksCircle(0, 0, changeDiameterFasten, 1); // Внешний круг радиусом 200
+            document2d_2.ksCircle(0, 0, changeDiameterFasten, 1);
 
             sketch2.EndEdit();
 

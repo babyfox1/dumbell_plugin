@@ -145,7 +145,7 @@ namespace DumbellPlugin.View
             if (sender is TextBox textBox)
             {
                 var textBoxName = textBox.Name;
-                var parameterType = ParameterType.Unknown;
+                ParameterType? parameterType = null;
 
                 var parameterTypeStr =
                     textBox.Name.Remove(textBoxName.Length - "TextBox".Length);
@@ -159,49 +159,52 @@ namespace DumbellPlugin.View
                     }
                 }
 
-                try
+                if (parameterType.HasValue)
                 {
-                    this.parameters.AssertParameter(
-                        parameterType,
-                        this.parameters.ParametersDict[parameterType],
-                        Convert.ToDouble(textBox.Text));
-                    this.SetTextFormElements();
-                    this.parameterFormElements[parameterType][this.textBox].BackColor = this.defaultColor;
-                    this.BuildButton.Enabled = true;
-                }
-                catch (ArgumentException ex)
-                {
-                    var parameter = this.parameters.ParametersDict[parameterType];
-                    var minValue = parameter.MinValue;
-                    var maxValue = parameter.MaxValue;
-                    var message = $"{ex.Message}\nВведите число от {minValue} до {maxValue}";
-                    this.parameterFormElements[parameterType][this.label].Text = message;
-                    this.parameterFormElements[parameterType][this.textBox].BackColor = this.errorColor;
-                    this.BuildButton.Enabled = false;
-                }
-                catch (FormatException)
-                {
-                    // Обработка ошибки, если введенное значение не может быть преобразовано в double
-                    // Например:
-                    this.parameterFormElements[parameterType][this.label].Text = "Некорректный формат числа";
-                    this.parameterFormElements[parameterType][this.textBox].BackColor = this.errorColor;
-                    this.BuildButton.Enabled = false;
-                }
-                catch (OverflowException)
-                {
-                    // Обработка ошибки, если введенное значение выходит за пределы допустимого диапазона double
-                    // Например:
-                    this.parameterFormElements[parameterType][this.label].Text = "Значение вне допустимого диапазона";
-                    this.parameterFormElements[parameterType][this.textBox].BackColor = this.errorColor;
-                    this.BuildButton.Enabled = false;
-                }
-                catch (Exception)
-                {
-                    // Обработка остальных исключений, не учтенных выше
-                    // Например:
-                    this.parameterFormElements[parameterType][this.label].Text = "Ошибка ввода";
-                    this.parameterFormElements[parameterType][this.textBox].BackColor = this.errorColor;
-                    this.BuildButton.Enabled = false;
+                    try
+                    {
+                        this.parameters.AssertParameter(
+                            parameterType.Value,
+                            this.parameters.ParametersDict[parameterType.Value],
+                            Convert.ToDouble(textBox.Text));
+                        this.SetTextFormElements();
+                        this.parameterFormElements[parameterType.Value][this.textBox].BackColor = this.defaultColor;
+                        this.BuildButton.Enabled = true;
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        var parameter = this.parameters.ParametersDict[parameterType.Value];
+                        var minValue = parameter.MinValue;
+                        var maxValue = parameter.MaxValue;
+                        var message = $"{ex.Message}\nВведите число от {minValue} до {maxValue}";
+                        this.parameterFormElements[parameterType.Value][this.label].Text = message;
+                        this.parameterFormElements[parameterType.Value][this.textBox].BackColor = this.errorColor;
+                        this.BuildButton.Enabled = false;
+                    }
+                    catch (FormatException)
+                    {
+                        // Обработка ошибки, если введенное значение не может быть преобразовано в double
+                        // Например:
+                        this.parameterFormElements[parameterType.Value][this.label].Text = "Некорректный формат числа";
+                        this.parameterFormElements[parameterType.Value][this.textBox].BackColor = this.errorColor;
+                        this.BuildButton.Enabled = false;
+                    }
+                    catch (OverflowException)
+                    {
+                        // Обработка ошибки, если введенное значение выходит за пределы допустимого диапазона double
+                        // Например:
+                        this.parameterFormElements[parameterType.Value][this.label].Text = "Значение вне допустимого диапазона";
+                        this.parameterFormElements[parameterType.Value][this.textBox].BackColor = this.errorColor;
+                        this.BuildButton.Enabled = false;
+                    }
+                    catch (Exception)
+                    {
+                        // Обработка остальных исключений, не учтенных выше
+                        // Например:
+                        this.parameterFormElements[parameterType.Value][this.label].Text = "Ошибка ввода";
+                        this.parameterFormElements[parameterType.Value][this.textBox].BackColor = this.errorColor;
+                        this.BuildButton.Enabled = false;
+                    }
                 }
             }
         }
@@ -234,23 +237,36 @@ namespace DumbellPlugin.View
         {
             if (Ladder30DegreeRadioButton.Checked)
             {
-                this.builder.BuildDetail30Ladder(parameters);
+                builder.Degrees = 30;
+                this.builder.BuildDetail(parameters);
             }
             else if (Ladder45DegreeRadioButton.Checked)
             {
-                this.builder.BuildDetail45Ladder(parameters);
+                builder.Degrees = 45;
+                this.builder.BuildDetail(parameters);
             }
             else
             {
+                builder.Degrees = 90;
                 this.builder.BuildDetail(parameters);
             }
         }
 
+        /// <summary>
+        /// Создано,чтобы работало BuildButton_Click.
+        /// </summary>
+        /// <param name="sender"> par.</param>
+        /// <param name="e">e.</param>
         private void Ladder30DegreeRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             // Дополнительной логики при изменении радиобаттона, если нужно
         }
 
+        /// <summary>
+        /// Создано,чтобы работало BuildButton_Click.
+        /// </summary>
+        /// <param name="sender">param.</param>
+        /// <param name="e">e.</param>
         private void Ladder45DegreeRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             // Дополнительной логики при изменении радиобаттона, если нужно

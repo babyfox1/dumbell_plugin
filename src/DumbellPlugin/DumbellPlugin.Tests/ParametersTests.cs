@@ -32,7 +32,7 @@
         public void GetParameter_WithInvalidType_ThrowsException()
         {
             Assert.Throws<ArgumentException>(() =>
-                parameters.GetParameter(ParameterType.Unknown));
+                parameters.GetParameter((ParameterType)100)); 
         }
 
         [Test]

@@ -252,21 +252,11 @@ namespace DumbellPlugin.View
             }
         }
 
-        /// <summary>
-        /// Создано,чтобы работало BuildButton_Click.
-        /// </summary>
-        /// <param name="sender"> par.</param>
-        /// <param name="e">e.</param>
         private void Ladder30DegreeRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             // Дополнительной логики при изменении радиобаттона, если нужно
         }
 
-        /// <summary>
-        /// Создано,чтобы работало BuildButton_Click.
-        /// </summary>
-        /// <param name="sender">param.</param>
-        /// <param name="e">e.</param>
         private void Ladder45DegreeRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             // Дополнительной логики при изменении радиобаттона, если нужно

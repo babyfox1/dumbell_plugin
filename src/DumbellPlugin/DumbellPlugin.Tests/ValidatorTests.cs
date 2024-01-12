@@ -2,10 +2,6 @@
 {
     using NUnit.Framework;
     using DumbellPlugin.Model;
-
-    /// <summary>
-    /// Тесты для класса Validator.
-    /// </summary>
     public class ValidatorTests
     {
         /// <summary>
@@ -21,8 +17,10 @@
             double min = 5;
             double max = 15;
 
-            // Act & Assert
-            Assert.DoesNotThrow(() => Validator.ValidateRange(current, min, max));
+            Validator.ValidateRange(current, min, max);
+
+            // Assert
+            // Тест пройден, если не было исключения 
         }
 
         /// <summary>
@@ -34,6 +32,7 @@
         public void ValidateRange_ValueOutOfRange_ThrowsException()
         {
             // Arrange & Act & Assert
+            // TODO: в Assert писать только то, что должно тестироваться. Подготовка данных отдельно делается
             Assert.Throws<ArgumentException>(() => {
                 double current = 20;
                 double min = 5;
@@ -156,7 +155,7 @@
             bool result = Validator.IsNumberInRange(value, min, max);
 
             // Assert
-            Assert.That(result, Is.True);
+            Assert.That(result == true);
         }
 
         /// <summary>
@@ -175,7 +174,7 @@
             bool result = Validator.IsNumberInRange(value, min, max);
 
             // Assert
-            Assert.That(result, Is.False);
+            Assert.That(result == false);
         }
     }
 }

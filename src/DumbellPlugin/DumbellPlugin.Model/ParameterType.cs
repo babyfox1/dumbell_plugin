@@ -48,5 +48,10 @@ namespace DumbellPlugin.Model
         /// Ширина диска.
         /// </summary>
         WidthDisk,
+
+        /// <summary>
+        /// Неизвестный тип параметра.
+        /// </summary>
+        Unknown,
     }
 }

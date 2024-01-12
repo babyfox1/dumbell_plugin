@@ -28,15 +28,6 @@ namespace DumbellPlugin.Model
         private Parameters parameters = new Parameters();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Builder"/> class.
-        /// Конструктор.
-        /// </summary>
-        // TODO: если не используется, то убрать
-        public Builder()
-        {
-        }
-
-        /// <summary>
         /// Строит деталь на основе заданных параметров.
         /// </summary>
         /// <param name="parameters">Параметры для построения детали.</param>

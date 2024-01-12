@@ -2,6 +2,8 @@
 {
     using NUnit.Framework;
     using DumbellPlugin.Model;
+
+    // TODO: XML-комментарии
     public class ValidatorTests
     {
         /// <summary>

@@ -31,7 +31,7 @@ namespace DumbellPlugin.Model
         /// Initializes a new instance of the <see cref="Builder"/> class.
         /// Конструктор.
         /// </summary>
-        // TODO: если не используется, то убрать
+        // TODO: не используется – убрать (нет в теле конструктора ничего)
         public Builder()
         {
         }
@@ -61,7 +61,6 @@ namespace DumbellPlugin.Model
                 ParameterType.DiameterHandle);
 
             // Создаем эскиз влево
-            // TODO: длинная строка
             var sketchHandle = wrapper.CreateSketch(
                 Obj3dType.o3d_planeXOZ, -1 * lengthHandle / 2);
 

@@ -2,10 +2,6 @@
 {
     using NUnit.Framework;
     using DumbellPlugin.Model;
-
-    /// <summary>
-    /// Тесты для класса Validator.
-    /// </summary>
     public class ValidatorTests
     {
         /// <summary>

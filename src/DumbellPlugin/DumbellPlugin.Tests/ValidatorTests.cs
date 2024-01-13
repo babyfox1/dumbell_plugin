@@ -4,6 +4,9 @@
     using DumbellPlugin.Model;
 
     // TODO: XML
+    /// <summary>
+    /// Тесты для класса Validator.
+    /// </summary>
     public class ValidatorTests
     {
         /// <summary>
@@ -51,10 +54,10 @@
         {
             // Arrange & Act & Assert
             // TODO: вынести
-            Assert.DoesNotThrow(() => {
-                double min = 5;
-                double max = 15;
+            double min = 5;
+            double max = 15;
 
+            Assert.DoesNotThrow(() => {
                 Validator.ValidateMinMax(min, max);
             });
         }
@@ -66,11 +69,10 @@
         [Test]
         public void ValidateMinMax_MinMoreThanMax_ThrowsException()
         {
+            double min = 15;
+            double max = 10;
             // Arrange & Act & Assert
             Assert.Throws<ArgumentException>(() => {
-                double min = 15;
-                double max = 10;
-
                 Validator.ValidateMinMax(min, max);
             });
         }
@@ -82,10 +84,9 @@
         [Test]
         public void ValidateNonNegative_PositiveValue_DoesNotThrow()
         {
+            double value = 10;
             // Arrange & Act & Assert
             Assert.DoesNotThrow(() => {
-                double value = 10;
-
                 Validator.ValidateNonNegative(value);
             });
         }
@@ -97,10 +98,9 @@
         [Test]
         public void ValidateNonNegative_NegativeValue_ThrowsException()
         {
+            double value = -5;
             // Arrange & Act & Assert
             Assert.Throws<ArgumentException>(() => {
-                double value = -5;
-
                 Validator.ValidateNonNegative(value);
             });
         }
@@ -112,12 +112,11 @@
         [Test]
         public void AssertNumberIsInRange_ValueInRange_DoesNotThrow()
         {
+            double value = 10;
+            double min = 5;
+            double max = 15;
             // Arrange & Act & Assert
             Assert.DoesNotThrow(() => {
-                double value = 10;
-                double min = 5;
-                double max = 15;
-
                 Validator.AssertNumberIsInRange(value, min, max);
             });
         }
@@ -130,11 +129,12 @@
         [Test]
         public void AssertNumberIsInRange_ValueOutOfRange_ThrowsException()
         {
+            double value = 20;
+            double min = 5;
+            double max = 15;
+
             // Arrange & Act & Assert
             Assert.Throws<ArgumentException>(() => {
-                double value = 20;
-                double min = 5;
-                double max = 15;
 
                 Validator.AssertNumberIsInRange(value, min, max);
             });

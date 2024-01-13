@@ -16,7 +16,7 @@ namespace DumbellPlugin.Wrapper
         /// <summary>
         /// Компонент исполнения.
         /// </summary>
-        private ksPart? part;
+        private ksPart? _part;
 
         /// <summary>
         /// Gets получает объект KOMPAS-3D.
@@ -62,7 +62,7 @@ namespace DumbellPlugin.Wrapper
             if (document3D != null)
             {
                 document3D.Create();
-                this.part = (ksPart?)document3D.GetPart((int)Part_Type.pTop_Part);
+                this._part = (ksPart?)document3D.GetPart((int)Part_Type.pTop_Part);
             }
 
             return document3D;
@@ -76,10 +76,10 @@ namespace DumbellPlugin.Wrapper
         /// <returns>offsetEntity.</returns>
         public ksEntity CreateOffsetPlane(Obj3dType planeType, double offset)
         {
-            var offsetEntity = (ksEntity)part.NewEntity((short)Obj3dType.o3d_planeOffset);
+            var offsetEntity = (ksEntity)_part.NewEntity((short)Obj3dType.o3d_planeOffset);
             var offsetDef = (ksPlaneOffsetDefinition)offsetEntity.GetDefinition();
 
-            ksEntity planeEntity = (ksEntity)this.part.NewEntity((short)planeType);
+            ksEntity planeEntity = (ksEntity)this._part.NewEntity((short)planeType);
             offsetDef.SetPlane(planeEntity);
 
             offsetDef.offset = offset;
@@ -108,11 +108,11 @@ namespace DumbellPlugin.Wrapper
             else
             {
                 // Берем дефолтную плоскость
-                planeEntity = (ksEntity)part.GetDefaultEntity((short)planeType);
+                planeEntity = (ksEntity)_part.GetDefaultEntity((short)planeType);
             }
 
             // Далее создаем эскиз
-            var sketch = (ksEntity)part.NewEntity((short)Obj3dType.o3d_sketch);
+            var sketch = (ksEntity)_part.NewEntity((short)Obj3dType.o3d_sketch);
 
             var ksSketch = (ksSketchDefinition)sketch.GetDefinition();
 
@@ -135,7 +135,7 @@ namespace DumbellPlugin.Wrapper
         public ksBossExtrusionDefinition CreateExtrusion(
             ksSketchDefinition sketch, double depth, bool side = true)
         {
-            var extrusionEntity = (ksEntity)part.
+            var extrusionEntity = (ksEntity)_part.
                 NewEntity((short)ksObj3dTypeEnum.o3d_bossExtrusion);
             var extrusionDef = (ksBossExtrusionDefinition)extrusionEntity.
                 GetDefinition();

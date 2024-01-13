@@ -20,41 +20,41 @@ namespace DumbellPlugin.View
         /// Экземпляр класса параметров.
         /// </summary>
         // TODO: RSDN
-        private readonly Parameters parameters = new Parameters();
+        private readonly Parameters _parameters = new Parameters();
 
         /// <summary>
         /// Экземпляр класса строителя.
         /// </summary>
         // TODO: RSDN во всех полях
-        private readonly Builder builder = new Builder();
+        private readonly Builder _builder = new Builder();
 
         /// <summary>
         /// Словарь, содержащий элементы управления формы для каждого типа
         /// параметра.
         /// </summary>
         private readonly Dictionary<ParameterType, Dictionary<string, Control>>
-            parameterFormElements = new Dictionary<ParameterType, Dictionary<string, Control>>();
+            _parameterFormElements = new Dictionary<ParameterType, Dictionary<string, Control>>();
 
         /// <summary>
         /// Цвет по умолчанию для элементов формы.
         /// </summary>
-        private readonly Color defaultColor = Color.White;
+        private readonly Color _defaultColor = Color.White;
 
         /// <summary>
         /// Цвет для обозначения ошибок ввода.
         /// </summary>
-        private readonly Color errorColor =
+        private readonly Color _errorColor =
             Color.FromArgb(255, 192, 192);
 
         /// <summary>
-        /// Строка обозначающая textBox.
+        /// Строка обозначающая _textBox.
         /// </summary>
-        private readonly string textBox = "textBox";
+        private readonly string _textBox = "textBox";
 
         /// <summary>
-        /// Строка обозначающая label.
+        /// Строка обозначающая _label.
         /// </summary>
-        private readonly string label = "label";
+        private readonly string _label = "label";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainForm"/> class.
@@ -79,61 +79,61 @@ namespace DumbellPlugin.View
         /// </summary>
         private void InitializeParameterFormElements()
         {
-            this.parameterFormElements.Add(
+            this._parameterFormElements.Add(
                 ParameterType.LengthHandle,
                 new Dictionary<string, Control>
                 {
-                    { this.textBox, this.LengthHandleTextBox },
-                    { this.label, this.LengthHandleLabel },
+                    { this._textBox, this.LengthHandleTextBox },
+                    { this._label, this.LengthHandleLabel },
                 });
-            this.parameterFormElements.Add(
+            this._parameterFormElements.Add(
                 ParameterType.DiameterHandle,
                 new Dictionary<string, Control>
                 {
-                    { this.textBox, this.DiameterHandleTextBox },
-                    { this.label, this.DiameterHandleLabel },
+                    { this._textBox, this.DiameterHandleTextBox },
+                    { this._label, this.DiameterHandleLabel },
                 });
-            this.parameterFormElements.Add(
+            this._parameterFormElements.Add(
                 ParameterType.WidthFasten,
                 new Dictionary<string, Control>
                 {
-                    { this.textBox, this.WidthFastenTextBox },
-                    { this.label, this.WidthFastenLabel },
+                    { this._textBox, this.WidthFastenTextBox },
+                    { this._label, this.WidthFastenLabel },
                 });
-            this.parameterFormElements.Add(
+            this._parameterFormElements.Add(
                 ParameterType.DiameterFasten,
                 new Dictionary<string, Control>
                 {
-                    { this.textBox, this.DiameterFastenTextBox },
-                    { this.label, this.DiameterFastenLabel },
+                    { this._textBox, this.DiameterFastenTextBox },
+                    { this._label, this.DiameterFastenLabel },
                 });
-            this.parameterFormElements.Add(
+            this._parameterFormElements.Add(
                 ParameterType.AmountDisk,
                 new Dictionary<string, Control>
                 {
-                    { this.textBox, this.AmountDiskTextBox },
-                    { this.label, this.AmountDiskLabel },
+                    { this._textBox, this.AmountDiskTextBox },
+                    { this._label, this.AmountDiskLabel },
                 });
-            this.parameterFormElements.Add(
+            this._parameterFormElements.Add(
                 ParameterType.OuterDiameterDisk,
                 new Dictionary<string, Control>
                 {
-                    { this.textBox, this.OuterDiameterDiskTextBox },
-                    { this.label, this.OuterDiameterDiskLabel },
+                    { this._textBox, this.OuterDiameterDiskTextBox },
+                    { this._label, this.OuterDiameterDiskLabel },
                 });
-            this.parameterFormElements.Add(
+            this._parameterFormElements.Add(
                 ParameterType.InnerDiameterDisk,
                 new Dictionary<string, Control>
                 {
-                    { this.textBox, this.InnerDiameterDiskTextBox },
-                    { this.label, this.InnerDiameterDiskLabel },
+                    { this._textBox, this.InnerDiameterDiskTextBox },
+                    { this._label, this.InnerDiameterDiskLabel },
                 });
-            this.parameterFormElements.Add(
+            this._parameterFormElements.Add(
                 ParameterType.WidthDisk,
                 new Dictionary<string, Control>
                 {
-                    { this.textBox, this.WidthDiskTextBox },
-                    { this.label, this.WidthDiskLabel },
+                    { this._textBox, this.WidthDiskTextBox },
+                    { this._label, this.WidthDiskLabel },
                 });
             this.SetTextFormElements();
         }
@@ -151,7 +151,7 @@ namespace DumbellPlugin.View
                 var parameterTypeStr =
                     textBox.Name.Remove(textBoxName.Length - "TextBox".Length);
 
-                foreach (var item in this.parameterFormElements.Keys)
+                foreach (var item in this._parameterFormElements.Keys)
                 {
                     if (item.ToString() == parameterTypeStr)
                     {
@@ -164,46 +164,46 @@ namespace DumbellPlugin.View
                 {
                     try
                     {
-                        this.parameters.AssertParameter(
+                        this._parameters.AssertParameter(
                             parameterType.Value,
-                            this.parameters.ParametersDict[parameterType.Value],
+                            this._parameters.ParametersDict[parameterType.Value],
                             Convert.ToDouble(textBox.Text));
                         this.SetTextFormElements();
-                        this.parameterFormElements[parameterType.Value][this.textBox].BackColor = this.defaultColor;
+                        this._parameterFormElements[parameterType.Value][this._textBox].BackColor = this._defaultColor;
                         this.BuildButton.Enabled = true;
                     }
                     catch (ArgumentException ex)
                     {
-                        var parameter = this.parameters.ParametersDict[parameterType.Value];
+                        var parameter = this._parameters.ParametersDict[parameterType.Value];
                         var minValue = parameter.MinValue;
                         var maxValue = parameter.MaxValue;
                         var message = $"{ex.Message}\nВведите число от {minValue} до {maxValue}";
-                        this.parameterFormElements[parameterType.Value][this.label].Text = message;
-                        this.parameterFormElements[parameterType.Value][this.textBox].BackColor = this.errorColor;
+                        this._parameterFormElements[parameterType.Value][this._label].Text = message;
+                        this._parameterFormElements[parameterType.Value][this._textBox].BackColor = this._errorColor;
                         this.BuildButton.Enabled = false;
                     }
                     catch (FormatException)
                     {
                         // Обработка ошибки, если введенное значение не может быть преобразовано в double
                         // Например:
-                        this.parameterFormElements[parameterType.Value][this.label].Text = "Некорректный формат числа";
-                        this.parameterFormElements[parameterType.Value][this.textBox].BackColor = this.errorColor;
+                        this._parameterFormElements[parameterType.Value][this._label].Text = "Некорректный формат числа";
+                        this._parameterFormElements[parameterType.Value][this._textBox].BackColor = this._errorColor;
                         this.BuildButton.Enabled = false;
                     }
                     catch (OverflowException)
                     {
                         // Обработка ошибки, если введенное значение выходит за пределы допустимого диапазона double
                         // Например:
-                        this.parameterFormElements[parameterType.Value][this.label].Text = "Значение вне допустимого диапазона";
-                        this.parameterFormElements[parameterType.Value][this.textBox].BackColor = this.errorColor;
+                        this._parameterFormElements[parameterType.Value][this._label].Text = "Значение вне допустимого диапазона";
+                        this._parameterFormElements[parameterType.Value][this._textBox].BackColor = this._errorColor;
                         this.BuildButton.Enabled = false;
                     }
                     catch (Exception)
                     {
                         // Обработка остальных исключений, не учтенных выше
                         // Например:
-                        this.parameterFormElements[parameterType.Value][this.label].Text = "Ошибка ввода";
-                        this.parameterFormElements[parameterType.Value][this.textBox].BackColor = this.errorColor;
+                        this._parameterFormElements[parameterType.Value][this._label].Text = "Ошибка ввода";
+                        this._parameterFormElements[parameterType.Value][this._textBox].BackColor = this._errorColor;
                         this.BuildButton.Enabled = false;
                     }
                 }
@@ -217,14 +217,14 @@ namespace DumbellPlugin.View
         private void SetTextFormElements()
         {
             foreach (var item
-                in this.parameters.ParametersDict)
+                in this._parameters.ParametersDict)
             {
                 var key = item.Key;
                 var value = item.Value;
 
-                this.parameterFormElements[key][this.textBox].Text =
+                this._parameterFormElements[key][this._textBox].Text =
                     value.CurrentValue.ToString();
-                this.parameterFormElements[key][this.label].Text =
+                this._parameterFormElements[key][this._label].Text =
                     $"от {value.MinValue} до {value.MaxValue}";
             }
         }
@@ -238,18 +238,18 @@ namespace DumbellPlugin.View
         {
             if (Ladder30DegreeRadioButton.Checked)
             {
-                builder.Degrees = 30;
+                _builder.Degrees = 30;
             }
             else if (Ladder45DegreeRadioButton.Checked)
             {
-                builder.Degrees = 45;
+                _builder.Degrees = 45;
             }
             else
             {
-                builder.Degrees = 90;
+                _builder.Degrees = 90;
             }
 
-            this.builder.BuildDetail(parameters);
+            this._builder.BuildDetail(_parameters);
         }
     }
 }

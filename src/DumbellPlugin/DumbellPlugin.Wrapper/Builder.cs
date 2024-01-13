@@ -2,8 +2,9 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace DumbellPlugin.Model
+namespace DumbellPlugin.Wrapper
 {
+    using DumbellPlugin.Model;
     using Kompas6API5;
     using Kompas6Constants3D;
 
@@ -78,8 +79,8 @@ namespace DumbellPlugin.Model
 
             // Создаем внутренний диаметр диска чуть больше диаметра рукоятки
             // TODO: RSDN
-            const double HANDLE_INNER_DISK_PROP = 1.05;
-            double changeInnerDiameterDisk = diameterHandle * HANDLE_INNER_DISK_PROP;
+            const double handleInnerDiskProp = 1.05;
+            double changeInnerDiameterDisk = diameterHandle * handleInnerDiskProp;
 
             // Создаем расстояние от центра до начала выдавливания дисков
             const double EXTRUSION_LENGTH_DISK = 85.0;

@@ -8,13 +8,15 @@
     /// </summary>
     public class ParametersTests
     {
-        // TODO: RSDN
-        private Parameters parameters;
+        /// <summary>
+        /// Объект параметров.
+        /// </summary>
+        private Parameters? _parameters;
 
         [SetUp]
         public void Setup()
         {
-            parameters = new Parameters();
+            _parameters = new Parameters();
         }
 
         /// <summary>
@@ -23,8 +25,8 @@
         [Test]
         public void Ctor_InitializesParameters()
         {
-            Assert.That(parameters.ParametersDict, Is.Not.Null);
-            Assert.That(parameters.ParametersDict.Count, Is.EqualTo(8));
+            Assert.That(_parameters.ParametersDict, Is.Not.Null);
+            Assert.That(_parameters.ParametersDict.Count, Is.EqualTo(8));
         }
 
         /// <summary>
@@ -34,7 +36,7 @@
         [Test]
         public void GetParameter_WithValidType_ReturnsValue()
         {
-            var length = parameters.GetParameter(ParameterType.LengthHandle);
+            var length = _parameters.GetParameter(ParameterType.LengthHandle);
 
             Assert.That(length, Is.EqualTo(500));
         }
@@ -47,7 +49,7 @@
         public void GetParameter_WithInvalidType_ThrowsException()
         {
             Assert.Throws<ArgumentException>(() =>
-                parameters.GetParameter((ParameterType)100));
+                _parameters.GetParameter((ParameterType)100));
         }
 
         /// <summary>
@@ -57,10 +59,10 @@
         [Test]
         public void AssertParameter_WithValidData_SetsNewValue()
         {
-            parameters.AssertParameter(ParameterType.LengthHandle,
-               parameters.ParametersDict[ParameterType.LengthHandle], 550);
+            _parameters.AssertParameter(ParameterType.LengthHandle,
+               _parameters.ParametersDict[ParameterType.LengthHandle], 550);
 
-            var length = parameters.GetParameter(ParameterType.LengthHandle);
+            var length = _parameters.GetParameter(ParameterType.LengthHandle);
 
             Assert.That(length, Is.EqualTo(550));
         }
@@ -73,9 +75,9 @@
         public void AssertParameter_ValueOutOfRange_ThrowsException()
         {
             Assert.Throws<ArgumentException>(() =>
-                parameters.AssertParameter(
+                _parameters.AssertParameter(
                     ParameterType.LengthHandle,
-                    parameters.ParametersDict[ParameterType.LengthHandle],
+                    _parameters.ParametersDict[ParameterType.LengthHandle],
                     700)
             );
         }

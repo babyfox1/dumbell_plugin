@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace DumbellPlugin.Model
+namespace DumbellPlugin.Wrapper
 {
     using System;
     using Kompas6API5;

@@ -2,6 +2,7 @@
 {
     using System.Diagnostics;
     using DumbellPlugin.Model;
+    using DumbellPlugin.Wrapper;
     using NickStrupat;
 
     /// <summary>

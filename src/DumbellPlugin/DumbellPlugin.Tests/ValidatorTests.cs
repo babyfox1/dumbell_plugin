@@ -2,6 +2,8 @@
 {
     using NUnit.Framework;
     using DumbellPlugin.Model;
+
+    // TODO: XML
     public class ValidatorTests
     {
         /// <summary>
@@ -17,10 +19,8 @@
             double min = 5;
             double max = 15;
 
-            Validator.ValidateRange(current, min, max);
-
             // Assert
-            // Тест пройден, если не было исключения 
+            Assert.DoesNotThrow(() => Validator.ValidateRange(current, min, max));
         }
 
         /// <summary>
@@ -31,13 +31,13 @@
         [Test]
         public void ValidateRange_ValueOutOfRange_ThrowsException()
         {
-            // Arrange & Act & Assert
-            // TODO: в Assert писать только то, что должно тестироваться. Подготовка данных отдельно делается
-            Assert.Throws<ArgumentException>(() => {
-                double current = 20;
-                double min = 5;
-                double max = 15;
+            // Arrange
+            double current = 20;
+            double min = 5;
+            double max = 15;
 
+            // Act & Assert
+            Assert.Throws<ArgumentException>(() => {
                 Validator.ValidateRange(current, min, max);
             });
         }
@@ -50,6 +50,7 @@
         public void ValidateMinMax_ValidValues_DoesNotThrow()
         {
             // Arrange & Act & Assert
+            // TODO: вынести
             Assert.DoesNotThrow(() => {
                 double min = 5;
                 double max = 15;

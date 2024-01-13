@@ -296,7 +296,6 @@
             Ladder45DegreeRadioButton.TabStop = true;
             Ladder45DegreeRadioButton.Text = "45 градусов";
             Ladder45DegreeRadioButton.UseVisualStyleBackColor = true;
-            Ladder45DegreeRadioButton.CheckedChanged += Ladder45DegreeRadioButton_CheckedChanged;
             // 
             // Ladder30DegreeRadioButton
             // 
@@ -308,7 +307,6 @@
             Ladder30DegreeRadioButton.TabStop = true;
             Ladder30DegreeRadioButton.Text = "30 градусов";
             Ladder30DegreeRadioButton.UseVisualStyleBackColor = true;
-            Ladder30DegreeRadioButton.CheckedChanged += Ladder30DegreeRadioButton_CheckedChanged;
             // 
             // label1
             // 

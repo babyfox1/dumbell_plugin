@@ -9,6 +9,7 @@ namespace DumbellPlugin.View
     using System.Drawing;
     using System.Windows.Forms;
     using DumbellPlugin.Model;
+    using DumbellPlugin.Wrapper;
 
     /// <summary>
     /// Майн.
@@ -238,30 +239,17 @@ namespace DumbellPlugin.View
             if (Ladder30DegreeRadioButton.Checked)
             {
                 builder.Degrees = 30;
-                this.builder.BuildDetail(parameters);
             }
             else if (Ladder45DegreeRadioButton.Checked)
             {
                 builder.Degrees = 45;
-                this.builder.BuildDetail(parameters);
             }
             else
             {
                 builder.Degrees = 90;
-                this.builder.BuildDetail(parameters);
             }
-        }
 
-        // TODO: Убрать, если не используется
-        private void Ladder30DegreeRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            // Дополнительной логики при изменении радиобаттона, если нужно
-        }
-
-        // TODO: Убрать, если не используется
-        private void Ladder45DegreeRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            // Дополнительной логики при изменении радиобаттона, если нужно
+            this.builder.BuildDetail(parameters);
         }
     }
 }

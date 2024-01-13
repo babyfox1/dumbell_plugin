@@ -78,7 +78,6 @@ namespace DumbellPlugin.Wrapper
             double diameterHandle = _parameters.GetParameter(ParameterType.DiameterHandle);
 
             // Создаем внутренний диаметр диска чуть больше диаметра рукоятки
-            // TODO: RSDN
             const double handleInnerDiskProp = 1.05;
             double changeInnerDiameterDisk = diameterHandle * handleInnerDiskProp;
 
@@ -86,14 +85,14 @@ namespace DumbellPlugin.Wrapper
             const double extrusionLengthDisk = 85.0;
 
             // Физическое расстояние между дисками
-            const double lengthbtwDisk = 2.0;
+            const double lengthBetweenDisk = 2.0;
 
             // Присваиваем значение внешнего радиуса временной переменной,
             // которая будет уменьшаться.
             double prevOuterDiameter = outerDiameterDisk;
 
             // Расстояние между началом выдавливания дисков
-            double offset = widthDisk + lengthbtwDisk;
+            double offset = widthDisk + lengthBetweenDisk;
 
             // Синусы углов.
             const double sin60 = 0.866;

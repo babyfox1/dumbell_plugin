@@ -3,7 +3,6 @@
     using NUnit.Framework;
     using DumbellPlugin.Model;
 
-    // TODO: XML
     /// <summary>
     /// Тесты для класса Validator.
     /// </summary>
@@ -52,11 +51,11 @@
         [Test]
         public void ValidateMinMax_ValidValues_DoesNotThrow()
         {
-            // Arrange & Act & Assert
-            // TODO: вынести
+            // Arrange
             double min = 5;
             double max = 15;
 
+            // Act & Assert
             Assert.DoesNotThrow(() => {
                 Validator.ValidateMinMax(min, max);
             });
